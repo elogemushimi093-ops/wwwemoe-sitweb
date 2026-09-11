@@ -120,6 +120,7 @@ export async function onRequestPost({ request, env }) {
   return json({ ok: true }, 201);
 }
 
+
 export function onRequestOptions() {
   return new Response(null, { status: 204, headers: { allow: "POST, OPTIONS" } });
 }
