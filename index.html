@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -23,9 +24,11 @@
       --radius: 24px;
       --page: min(1180px, calc(100% - 48px));
     }
-
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
     body {
       min-width: 320px;
       margin: 0;
@@ -35,16 +38,33 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.55;
     }
-    body.modal-open { overflow: hidden; }
-    a { color: inherit; text-decoration: none; }
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
-    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+    body.modal-open {
+      overflow: hidden;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    button, input, select {
+      font: inherit;
+    }
+    button {
+      cursor: pointer;
+    }
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
       outline: 3px solid var(--mint);
       outline-offset: 3px;
     }
-
-    .page-glow, .grid-noise { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+    .page-glow,
+    .grid-noise {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
     .page-glow {
       background:
         radial-gradient(circle at 10% 0%, rgba(154, 124, 255, .34), transparent 29rem),
@@ -60,7 +80,6 @@
       background-size: 56px 56px;
       mask-image: linear-gradient(to bottom, #000, transparent 72%);
     }
-
     .site-header {
       position: sticky;
       top: 0;
@@ -69,459 +88,1911 @@
       background: rgba(11, 13, 19, .78);
       backdrop-filter: blur(18px);
     }
-    .header-inner, main, footer { width: var(--page); margin-inline: auto; }
-    .header-inner { display: flex; min-height: 82px; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { display: inline-flex; min-width: 0; align-items: center; gap: 12px; }
-    .brand img { width: 49px; height: 49px; flex: 0 0 auto; border-radius: 13px; object-fit: cover; background: var(--surface-2); }
-    .brand-text { display: grid; line-height: 1.15; }
-    .brand-name { color: var(--paper); font-size: 1.05rem; font-weight: 850; letter-spacing: .12em; }
-    .brand-text small { max-width: 240px; margin-top: 4px; color: var(--muted); font-size: .69rem; letter-spacing: .02em; }
-    .nav { display: flex; align-items: center; gap: 22px; }
-    .nav-links { display: flex; align-items: center; gap: 20px; }
-    .nav-links a { color: var(--muted); font-size: .82rem; font-weight: 700; }
-    .nav-links a:hover { color: var(--paper); }
-
-    .button, .language-button, .icon-button {
-      border: 1px solid transparent;
-      transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+    .header-inner,
+    main,
+    footer {
+      width: var(--page);
+      margin-inline: auto;
     }
-    .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 9px; border-radius: 999px; padding: 0 19px; font-size: .82rem; font-weight: 850; }
-    .button-primary { color: #11140a; background: var(--mint); }
-    .button-primary:hover { background: var(--mint-deep); transform: translateY(-2px); }
-    .button-outline { border-color: rgba(211,255,87,.7); color: var(--mint); background: rgba(211,255,87,.04); }
-    .button-outline:hover { background: var(--mint); color: #11140a; }
-    .language-button { min-width: 44px; height: 38px; border-color: var(--line); border-radius: 999px; color: var(--paper); background: rgba(255,255,255,.04); font-size: .75rem; font-weight: 850; }
-    .language-button:hover { border-color: var(--violet); color: var(--violet-light); }
-
-    .hero { min-height: 760px; display: grid; align-content: center; padding: 105px 0 88px; }
-    .eyebrow { display: flex; width: fit-content; align-items: center; gap: 9px; margin-bottom: 20px; color: var(--mint); font-size: .69rem; font-weight: 900; letter-spacing: .15em; }
-    .eyebrow::before { width: 24px; height: 1px; background: currentColor; content: ""; }
-    h1, h2, h3, p { margin: 0; }
-    h1, h2 { max-width: 880px; font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -.055em; line-height: .97; }
-    h1 { font-size: clamp(3.35rem, 8vw, 7.2rem); }
-    h2 { font-size: clamp(2.5rem, 5.3vw, 4.5rem); }
-    h1 em, h2 em { color: var(--violet-light); font-style: italic; }
-    .hero-copy { max-width: 650px; margin-top: 29px; color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem); }
-    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 34px; }
-    .text-link { color: var(--paper); font-size: .87rem; font-weight: 800; }
-    .text-link:hover { color: var(--mint); }
-    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 760px; gap: 20px; margin-top: 90px; }
-    .stat { border-top: 1px solid var(--line); padding-top: 15px; }
-    .stat strong { display: block; color: var(--mint); font-size: 1.8rem; font-weight: 600; letter-spacing: -.05em; }
-    .stat span { color: var(--muted); font-size: .75rem; }
-
-    .section { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 8vw, 106px); border-top: 1px solid var(--line); padding: 114px 0; }
-    .section-copy { max-width: 610px; color: var(--muted); font-size: 1rem; }
-    .section-copy p + p { margin-top: 21px; }
-    .panel { border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(145deg, rgba(31,37,53,.9), rgba(15,18,27,.72)); box-shadow: var(--shadow); }
-    .identity-panel { padding: clamp(25px, 4vw, 40px); color: var(--muted); }
-    .identity-panel p + p { margin-top: 20px; }
-    .identity-panel strong { color: var(--paper); }
-
-    .programs-section { display: block; }
-    .programs-header { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
-    .programs-header h2 { max-width: 640px; }
-    .carousel-controls { display: flex; align-items: center; gap: 9px; }
-    .icon-button { display: grid; width: 44px; height: 44px; place-items: center; border-color: var(--line); border-radius: 50%; color: var(--paper); background: rgba(255,255,255,.04); font-size: 1.15rem; }
-    .icon-button:hover { border-color: var(--mint); color: #10140a; background: var(--mint); }
-    .carousel { position: relative; overflow: hidden; margin-top: 47px; border-radius: var(--radius); }
-    .carousel-rail { display: flex; transition: transform .68s cubic-bezier(.65, 0, .25, 1); }
-    .program-card { position: relative; display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(240px, .94fr); flex: 0 0 100%; min-height: 385px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(125deg, #1b1e2a, #171425 50%, #10141d); padding: clamp(28px, 5vw, 63px); }
-    .program-card::after { position: absolute; right: -8%; bottom: -42%; width: min(42vw, 500px); aspect-ratio: 1; border: 1px solid rgba(211,255,87,.34); border-radius: 50%; box-shadow: 0 0 0 48px rgba(154,124,255,.08), 0 0 0 96px rgba(211,255,87,.04); content: ""; }
-    .program-card.is-active { border-color: rgba(211,255,87,.72); }
-    .program-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: start; }
-    .program-index { color: var(--mint); font-size: .72rem; font-weight: 900; letter-spacing: .15em; }
-    .program-card h3 { max-width: 560px; margin-top: 48px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.25rem, 4.8vw, 4.2rem); font-weight: 400; letter-spacing: -.055em; line-height: .98; }
-    .program-card p { max-width: 480px; margin-top: 22px; color: var(--muted); }
-    .program-card .button { margin-top: auto; }
-    .program-aside { position: relative; z-index: 1; display: grid; align-content: end; justify-items: end; color: var(--violet-light); }
-    .program-aside strong { max-width: 190px; color: var(--paper); font-size: clamp(2.6rem, 6vw, 5.7rem); font-weight: 850; letter-spacing: -.09em; line-height: .8; text-align: right; }
-    .program-aside span { margin-top: 14px; color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .14em; }
-    .carousel-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 17px; }
-    .carousel-note { color: var(--muted); font-size: .76rem; }
-    .carousel-dots { display: flex; gap: 8px; }
-    .carousel-dots button { width: 28px; height: 3px; border: 0; border-radius: 999px; background: rgba(255,255,255,.23); padding: 0; }
-    .carousel-dots button[aria-current="true"] { background: var(--mint); }
-
-    .subjects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .subject { border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.04); padding: 18px; color: var(--muted); font-size: .9rem; }
-    .degree-panel { padding: 32px; color: var(--muted); }
-    .degree-panel p + p { margin-top: 19px; }
-    .degree-panel strong { color: var(--paper); }
-
-    .admissions { display: block; }
-    .admissions-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin-top: 50px; }
-    .admission-card { min-height: 220px; padding: 23px; color: var(--muted); }
-    .admission-card h3 { color: var(--paper); font-size: 1rem; }
-    .admission-card p, .admission-card ul { margin-top: 15px; font-size: .88rem; }
-    .admission-card ul { padding-left: 18px; }
-    .admission-card strong { color: var(--mint); }
-    .admissions > .button { margin-top: 30px; }
-
-    .country-list { display: flex; flex-wrap: wrap; align-content: start; gap: 11px; }
-    .country { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.035); padding: 10px 14px; color: var(--paper); font-size: .85rem; font-weight: 700; }
-    .country i { font-size: 1.08rem; font-style: normal; }
-
-    .contact { align-items: center; }
-    .contact-details { margin-top: 30px; color: var(--muted); }
-    .contact-details p + p { margin-top: 11px; }
-    .contact-details strong { color: var(--paper); }
-    .contact-details a { color: var(--violet-light); }
-    .contact-details a:hover { color: var(--mint); }
-    .contact-panel { padding: 37px; }
-    .contact-panel p { color: var(--muted); }
-    .contact-panel .button { margin-top: 24px; }
-
-    .social-section { align-items: center; }
-    .social-links { display: flex; flex-wrap: wrap; gap: 15px; }
-    .social-link { display: grid; width: 76px; height: 76px; place-items: center; border: 1px solid var(--line); border-radius: 19px; color: var(--paper); background: rgba(255,255,255,.04); transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease; }
-    .social-link svg { width: 28px; height: 28px; fill: currentColor; }
-    .social-link:hover { border-color: var(--mint); color: #11140a; background: var(--mint); transform: translateY(-5px); }
-    .social-help { width: 100%; margin-top: 3px; color: var(--muted); font-size: .78rem; }
-
-    footer { display: flex; justify-content: space-between; gap: 18px; border-top: 1px solid var(--line); padding: 30px 0 42px; color: var(--muted); font-size: .72rem; }
-
-    dialog { width: min(730px, calc(100% - 30px)); max-height: min(90vh, 850px); overflow: hidden; border: 1px solid var(--line); border-radius: 25px; color: var(--paper); background: #151925; box-shadow: var(--shadow); padding: 0; }
-    dialog::backdrop { background: rgba(3, 4, 8, .78); backdrop-filter: blur(7px); }
-    .application-form { position: relative; max-height: min(90vh, 850px); overflow-y: auto; padding: clamp(26px, 5vw, 44px); }
-    .close-button { position: absolute; top: 18px; right: 18px; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--paper); background: transparent; font-size: 1.3rem; }
-    .close-button:hover { border-color: var(--mint); color: var(--mint); }
-    .application-form h2 { max-width: 510px; font-size: clamp(2.45rem, 5vw, 4rem); }
-    .form-intro { max-width: 570px; margin-top: 15px; color: var(--muted); font-size: .93rem; }
-    .selected-level { margin-top: 24px; border: 1px solid rgba(211,255,87,.4); border-radius: 14px; background: rgba(211,255,87,.06); padding: 12px 15px; color: var(--mint); font-size: .84rem; font-weight: 800; }
-    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; margin-top: 24px; }
-    .form-grid label { display: flex; flex-direction: column; gap: 7px; color: var(--violet-light); font-size: .75rem; font-weight: 850; }
-    .form-grid label.wide { grid-column: 1 / -1; }
-    .form-grid input, .form-grid select { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 10px; color: var(--paper); background: #0e1119; padding: 0 13px; }
-    .form-grid input:focus, .form-grid select:focus { border-color: var(--mint); }
-    .form-submit { width: 100%; margin-top: 23px; }
-    .form-status { min-height: 23px; margin: 16px 0 0; color: var(--mint); font-size: .84rem; }
-    .form-status.error { color: var(--danger); }
-    .honeypot { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(1px, 1px, 1px, 1px) !important; white-space: nowrap !important; }
-
+    .header-inner {
+      display: flex;
+      min-height: 82px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: inline-flex;
+      min-width: 0;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand img {
+      width: 49px;
+      height: 49px;
+      flex: 0 0 auto;
+      border-radius: 13px;
+      object-fit: cover;
+      background: var(--surface-2);
+    }
+    .brand-text {
+      display: grid;
+      line-height: 1.15;
+    }
+    .brand-name {
+      color: var(--paper);
+      font-size: 1.05rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+    }
+    .brand-text small {
+      max-width: 240px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .69rem;
+      letter-spacing: .02em;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-right: 6px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .nav-links a:hover {
+      color: var(--paper);
+    }
+    .button,
+    .language-button,
+    .icon-button {
+      border: 1px solid transparent;
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border-radius: 999px;
+      padding: 0 19px;
+      font-size: .82rem;
+      font-weight: 850;
+    }
+    .button-primary {
+      color: #11140a;
+      background: var(--mint);
+    }
+    .button-primary:hover {
+      background: var(--mint-deep);
+      transform: translateY(-2px);
+    }
+    .button-outline {
+      border-color: rgba(211,255,87,.7);
+      color: var(--mint);
+      background: rgba(211,255,87,.04);
+    }
+    .button-outline:hover {
+      background: var(--mint);
+      color: #11140a;
+    }
+    .button-space {
+      border-color: rgba(154,124,255,.65);
+      color: var(--violet-light);
+      background: rgba(154,124,255,.07);
+    }
+    .button-space:hover {
+      border-color: var(--violet);
+      color: var(--paper);
+      background: rgba(154,124,255,.18);
+      transform: translateY(-2px);
+    }
+    .language-button {
+      min-width: 44px;
+      height: 38px;
+      border-color: var(--line);
+      border-radius: 999px;
+      color: var(--paper);
+      background: rgba(255,255,255,.04);
+      font-size: .75rem;
+      font-weight: 850;
+    }
+    .language-button:hover {
+      border-color: var(--violet);
+      color: var(--violet-light);
+    }
+    .hero {
+      min-height: 760px;
+      display: grid;
+      align-content: center;
+      padding: 105px 0 88px;
+    }
+    .eyebrow {
+      display: flex;
+      width: fit-content;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--mint);
+      font-size: .69rem;
+      font-weight: 900;
+      letter-spacing: .15em;
+    }
+    .eyebrow::before {
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+    h1,
+    h2 {
+      max-width: 880px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      letter-spacing: -.055em;
+      line-height: .97;
+    }
+    h1 {
+      font-size: clamp(3.35rem, 8vw, 7.2rem);
+    }
+    h2 {
+      font-size: clamp(2.5rem, 5.3vw, 4.5rem);
+    }
+    h1 em,
+    h2 em {
+      color: var(--violet-light);
+      font-style: italic;
+    }
+    .hero-copy {
+      max-width: 650px;
+      margin-top: 29px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-top: 34px;
+    }
+    .text-link {
+      color: var(--paper);
+      font-size: .87rem;
+      font-weight: 800;
+    }
+    .text-link:hover {
+      color: var(--mint);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 760px;
+      gap: 20px;
+      margin-top: 90px;
+    }
+    .stat {
+      border-top: 1px solid var(--line);
+      padding-top: 15px;
+    }
+    .stat strong {
+      display: block;
+      color: var(--mint);
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -.05em;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: .75rem;
+    }
+    .section {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(40px, 8vw, 106px);
+      border-top: 1px solid var(--line);
+      padding: 114px 0;
+    }
+    .section-copy {
+      max-width: 610px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-copy p + p {
+      margin-top: 21px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(31,37,53,.9), rgba(15,18,27,.72));
+      box-shadow: var(--shadow);
+    }
+    .identity-panel {
+      padding: clamp(25px, 4vw, 40px);
+      color: var(--muted);
+    }
+    .identity-panel p + p {
+      margin-top: 20px;
+    }
+    .identity-panel strong {
+      color: var(--paper);
+    }
+    .programs-section {
+      display: block;
+    }
+    .programs-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .programs-header h2 {
+      max-width: 640px;
+    }
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .icon-button {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border-color: var(--line);
+      border-radius: 50%;
+      color: var(--paper);
+      background: rgba(255,255,255,.04);
+      font-size: 1.15rem;
+    }
+    .icon-button:hover {
+      border-color: var(--mint);
+      color: #10140a;
+      background: var(--mint);
+    }
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      margin-top: 47px;
+      border-radius: var(--radius);
+    }
+    .carousel-rail {
+      display: flex;
+      transition: transform .68s cubic-bezier(.65, 0, .25, 1);
+    }
+    .program-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(240px, .94fr);
+      flex: 0 0 100%;
+      min-height: 385px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(125deg, #1b1e2a, #171425 50%, #10141d);
+      padding: clamp(28px, 5vw, 63px);
+    }
+    .program-card::after {
+      position: absolute;
+      right: -8%;
+      bottom: -42%;
+      width: min(42vw, 500px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(211,255,87,.34);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 48px rgba(154,124,255,.08),
+        0 0 0 96px rgba(211,255,87,.04);
+      content: "";
+    }
+    .program-card.is-active {
+      border-color: rgba(211,255,87,.72);
+    }
+    .program-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
+    .program-index {
+      color: var(--mint);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .15em;
+    }
+    .program-card h3 {
+      max-width: 560px;
+      margin-top: 48px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.25rem, 4.8vw, 4.2rem);
+      font-weight: 400;
+      letter-spacing: -.055em;
+      line-height: .98;
+    }
+    .program-card p {
+      max-width: 480px;
+      margin-top: 22px;
+      color: var(--muted);
+    }
+    .program-card .button {
+      margin-top: auto;
+    }
+    .program-aside {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-content: end;
+      justify-items: end;
+      color: var(--violet-light);
+    }
+    .program-aside strong {
+      max-width: 190px;
+      color: var(--paper);
+      font-size: clamp(2.6rem, 6vw, 5.7rem);
+      font-weight: 850;
+      letter-spacing: -.09em;
+      line-height: .8;
+      text-align: right;
+    }
+    .program-aside span {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+    .carousel-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 17px;
+    }
+    .carousel-note {
+      color: var(--muted);
+      font-size: .76rem;
+    }
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .carousel-dots button {
+      width: 28px;
+      height: 3px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.23);
+      padding: 0;
+    }
+    .carousel-dots button[aria-current="true"] {
+      background: var(--mint);
+    }
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .subject {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255,255,255,.04);
+      padding: 18px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .degree-panel {
+      padding: 32px;
+      color: var(--muted);
+    }
+    .degree-panel p + p {
+      margin-top: 19px;
+    }
+    .degree-panel strong {
+      color: var(--paper);
+    }
+    .admissions {
+      display: block;
+    }
+    .admissions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 50px;
+    }
+    .admission-card {
+      min-height: 220px;
+      padding: 23px;
+      color: var(--muted);
+    }
+    .admission-card h3 {
+      color: var(--paper);
+      font-size: 1rem;
+    }
+    .admission-card p,
+    .admission-card ul {
+      margin-top: 15px;
+      font-size: .88rem;
+    }
+    .admission-card ul {
+      padding-left: 18px;
+    }
+    .admission-card strong {
+      color: var(--mint);
+    }
+    .admissions > .button {
+      margin-top: 30px;
+    }
+    .country-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: start;
+      gap: 11px;
+    }
+    .country {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+      padding: 10px 14px;
+      color: var(--paper);
+      font-size: .85rem;
+      font-weight: 700;
+    }
+    .country i {
+      font-size: 1.08rem;
+      font-style: normal;
+    }
+    .contact {
+      align-items: center;
+    }
+    .contact-details {
+      margin-top: 30px;
+      color: var(--muted);
+    }
+    .contact-details p + p {
+      margin-top: 11px;
+    }
+    .contact-details strong {
+      color: var(--paper);
+    }
+    .contact-details a {
+      color: var(--violet-light);
+    }
+    .contact-details a:hover {
+      color: var(--mint);
+    }
+    .contact-panel {
+      padding: 37px;
+    }
+    .contact-panel p {
+      color: var(--muted);
+    }
+    .contact-panel .button {
+      margin-top: 24px;
+    }
+    .social-section {
+      align-items: center;
+    }
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .social-link {
+      display: grid;
+      width: 76px;
+      height: 76px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      color: var(--paper);
+      background: rgba(255,255,255,.04);
+      transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        color .2s ease;
+    }
+    .social-link svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+    .social-link:hover {
+      border-color: var(--mint);
+      color: #11140a;
+      background: var(--mint);
+      transform: translateY(-5px);
+    }
+    .social-help {
+      width: 100%;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-top: 1px solid var(--line);
+      padding: 30px 0 42px;
+      color: var(--muted);
+      font-size: .72rem;
+    }
+    dialog {
+      width: min(730px, calc(100% - 30px));
+      max-height: min(90vh, 850px);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      color: var(--paper);
+      background: #151925;
+      box-shadow: var(--shadow);
+      padding: 0;
+    }
+    dialog::backdrop {
+      background: rgba(3, 4, 8, .78);
+      backdrop-filter: blur(7px);
+    }
+    .application-form {
+      position: relative;
+      max-height: min(90vh, 850px);
+      overflow-y: auto;
+      padding: clamp(26px, 5vw, 44px);
+    }
+    .close-button {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--paper);
+      background: transparent;
+      font-size: 1.3rem;
+    }
+    .close-button:hover {
+      border-color: var(--mint);
+      color: var(--mint);
+    }
+    .application-form h2 {
+      max-width: 510px;
+      font-size: clamp(2.45rem, 5vw, 4rem);
+    }
+    .form-intro {
+      max-width: 570px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: .93rem;
+    }
+    .selected-level {
+      margin-top: 24px;
+      border: 1px solid rgba(211,255,87,.4);
+      border-radius: 14px;
+      background: rgba(211,255,87,.06);
+      padding: 12px 15px;
+      color: var(--mint);
+      font-size: .84rem;
+      font-weight: 800;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+      margin-top: 24px;
+    }
+    .form-grid label {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      color: var(--violet-light);
+      font-size: .75rem;
+      font-weight: 850;
+    }
+    .form-grid label.wide {
+      grid-column: 1 / -1;
+    }
+    .form-grid input,
+    .form-grid select {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--paper);
+      background: #0e1119;
+      padding: 0 13px;
+    }
+    .form-grid input:focus,
+    .form-grid select:focus {
+      border-color: var(--mint);
+    }
+    .form-submit {
+      width: 100%;
+      margin-top: 23px;
+    }
+    .form-status {
+      min-height: 23px;
+      margin: 16px 0 0;
+      color: var(--mint);
+      font-size: .84rem;
+    }
+    .form-status.error {
+      color: var(--danger);
+    }
+    .honeypot {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      white-space: nowrap !important;
+    }
+    @media (max-width: 1100px) {
+      .nav-links {
+        gap: 12px;
+      }
+      .button-space {
+        padding-inline: 14px;
+      }
+    }
     @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .admissions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .section { gap: 45px; }
+      .nav-links {
+        display: none;
+      }
+      .admissions-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .section {
+        gap: 45px;
+      }
     }
     @media (max-width: 670px) {
-      :root { --page: min(100% - 32px, 1180px); }
-      .header-inner { min-height: 70px; gap: 11px; }
-      .brand img { width: 41px; height: 41px; }
-      .brand-name { font-size: .91rem; }
-      .brand-text small { max-width: 165px; font-size: .58rem; }
-      .header-inner .button { min-height: 37px; padding: 0 12px; font-size: .68rem; }
-      .language-button { min-width: 37px; height: 37px; }
-      .hero { min-height: 635px; padding: 85px 0 70px; }
-      .stats { gap: 12px; margin-top: 60px; }
-      .stat strong { font-size: 1.4rem; }
-      .stat span { font-size: .66rem; }
-      .section { display: block; padding: 78px 0; }
-      .section > :nth-child(2) { margin-top: 34px; }
-      .programs-header { display: block; }
-      .carousel-controls { margin-top: 25px; }
-      .carousel { margin-top: 28px; }
-      .program-card { display: block; min-height: 440px; }
-      .program-card h3 { margin-top: 34px; }
-      .program-aside { position: absolute; right: 28px; bottom: 31px; }
-      .program-aside strong { font-size: 3.7rem; }
-      .carousel-footer { align-items: start; flex-direction: column-reverse; }
-      .subjects, .admissions-grid, .form-grid { grid-template-columns: 1fr; }
-      .admission-card { min-height: auto; }
-      .form-grid label.wide { grid-column: auto; }
-      .contact-panel { padding: 28px; }
-      footer { flex-direction: column; }
+      :root {
+        --page: min(100% - 32px, 1180px);
+      }
+      .header-inner {
+        min-height: 70px;
+        gap: 8px;
+      }
+      .brand img {
+        width: 41px;
+        height: 41px;
+      }
+      .brand-name {
+        font-size: .91rem;
+      }
+      .brand-text small {
+        max-width: 165px;
+        font-size: .58rem;
+      }
+      .header-inner .button {
+        min-height: 37px;
+        padding: 0 11px;
+        font-size: .65rem;
+      }
+      .button-space {
+        display: none;
+      }
+      .language-button {
+        min-width: 37px;
+        height: 37px;
+      }
+      .hero {
+        min-height: 635px;
+        padding: 85px 0 70px;
+      }
+      .stats {
+        gap: 12px;
+        margin-top: 60px;
+      }
+      .stat strong {
+        font-size: 1.4rem;
+      }
+      .stat span {
+        font-size: .66rem;
+      }
+      .section {
+        display: block;
+        padding: 78px 0;
+      }
+      .section > :nth-child(2) {
+        margin-top: 34px;
+      }
+      .programs-header {
+        display: block;
+      }
+      .carousel-controls {
+        margin-top: 25px;
+      }
+      .carousel {
+        margin-top: 28px;
+      }
+      .program-card {
+        display: block;
+        min-height: 440px;
+      }
+      .program-card h3 {
+        margin-top: 34px;
+      }
+      .program-aside {
+        position: absolute;
+        right: 28px;
+        bottom: 31px;
+      }
+      .program-aside strong {
+        font-size: 3.7rem;
+      }
+      .carousel-footer {
+        align-items: start;
+        flex-direction: column-reverse;
+      }
+      .subjects,
+      .admissions-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .admission-card {
+        min-height: auto;
+      }
+      .form-grid label.wide {
+        grid-column: auto;
+      }
+      .contact-panel {
+        padding: 28px;
+      }
+      footer {
+        flex-direction: column;
+      }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page-glow"></div>
   <div class="grid-noise"></div>
-
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#accueil" aria-label="Accueil E.M.O.E">
-        <!-- Garde ton vrai fichier logo-emoe.jpg, sans le remplacer. -->
-        <img src="logo-emoe.jpg" alt="Logo officiel E.M.O.E">
-        <span class="brand-text"><span class="brand-name">E.M.O.E</span><small data-i18n="schoolName">École de Ministère Ombre de l’Éternel</small></span>
-      </a>
-      <nav class="nav" aria-label="Navigation principale">
-        <div class="nav-links">
-          <a href="#ecole" data-i18n="navSchool">L’école</a>
-          <a href="#programmes" data-i18n="navPrograms">Programmes</a>
-          <a href="#admissions" data-i18n="navAdmissions">Admissions</a>
-          <a href="#contact" data-i18n="navContact">Contact</a>
-        </div>
-        <button class="language-button" id="language-toggle" type="button" aria-label="Passer en anglais">EN</button>
-        <button class="button button-primary" type="button" data-open-modal data-i18n="navApply">Candidater</button>
-      </nav>
+  <a class="brand" href="#accueil" aria-label="Accueil E.M.O.E">
+    <img src="logo-emoe.jpg" alt="Logo officiel E.M.O.E">
+    <span class="brand-text">
+      <span class="brand-name">E.M.O.E</span>
+      <small data-i18n="schoolName">École de Ministère Ombre de l’Éternel</small>
+    </span>
+  </a>
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="nav-links">
+      <a href="#ecole" data-i18n="navSchool">L’école</a>
+      <a href="#programmes" data-i18n="navPrograms">Programmes</a>
+      <a href="#admissions" data-i18n="navAdmissions">Admissions</a>
+      <a href="#contact" data-i18n="navContact">Contact</a>
     </div>
+    <!-- NOUVEAU : accès à la plateforme E.M.O.E -->
+    <a
+      class="button button-space"
+      href="/api/espace"
+      data-i18n="navSpace"
+      aria-label="Ouvrir l’espace E.M.O.E">
+      Espace E.M.O.E ↗
+    </a>
+    <button
+      class="language-button"
+      id="language-toggle"
+      type="button"
+      aria-label="Passer en anglais">
+      EN
+    </button>
+    <button
+      class="button button-primary"
+      type="button"
+      data-open-modal
+      data-i18n="navApply">
+      Candidater
+    </button>
+  </nav>
+</div>
   </header>
-
   <main>
-    <section id="accueil" class="hero">
-      <div class="eyebrow" data-i18n="heroEyebrow">FORMATION · FOI · LEADERSHIP</div>
-      <h1 data-i18n-html="heroTitle">Former une génération<br><em>pour servir</em> le monde.</h1>
-      <p class="hero-copy" data-i18n="heroCopy">Une école internationale chrétienne évangélique de théologie pratique, dédiée à l’excellence académique, à la maturité spirituelle et à l’impact du ministère.</p>
-      <div class="hero-actions">
-        <button class="button button-primary" type="button" data-open-modal data-i18n="heroApply">Commencer une candidature <span aria-hidden="true">↗</span></button>
-        <a class="text-link" href="#programmes" data-i18n="heroPrograms">Découvrir les programmes <span aria-hidden="true">↓</span></a>
+<section id="accueil" class="hero">
+  <div class="eyebrow" data-i18n="heroEyebrow">
+    FORMATION · FOI · LEADERSHIP
+  </div>
+  <h1 data-i18n-html="heroTitle">
+    Former une génération<br>
+    <em>pour servir</em> le monde.
+  </h1>
+  <p class="hero-copy" data-i18n="heroCopy">
+    Une école internationale chrétienne évangélique de théologie pratique,
+    dédiée à l’excellence académique, à la maturité spirituelle et à l’impact du ministère.
+  </p>
+  <div class="hero-actions">
+    <button
+      class="button button-primary"
+      type="button"
+      data-open-modal
+      data-i18n="heroApply">
+      Commencer une candidature <span aria-hidden="true">↗</span>
+    </button>
+    <!-- NOUVEAU : accès direct depuis la page d’accueil -->
+    <a
+      class="button button-space"
+      href="/api/espace"
+      data-i18n="heroSpace">
+      Accéder à mon espace ↗
+    </a>
+    <a
+      class="text-link"
+      href="#programmes"
+      data-i18n="heroPrograms">
+      Découvrir les programmes <span aria-hidden="true">↓</span>
+    </a>
+  </div>
+  <div class="stats" aria-label="Chiffres clés">
+    <div class="stat">
+      <strong>09</strong>
+      <span data-i18n="statCountries">Pays représentés</span>
+    </div>
+    <div class="stat">
+      <strong>03</strong>
+      <span data-i18n="statCycles">Cycles académiques</span>
+    </div>
+    <div class="stat">
+      <strong>FR · EN</strong>
+      <span data-i18n="statBilingual">Formation bilingue</span>
+    </div>
+  </div>
+</section>
+<section id="ecole" class="section">
+  <div>
+    <div class="eyebrow" data-i18n="aboutEyebrow">
+      À PROPOS DE L’E.M.O.E
+    </div>
+    <h2 data-i18n-html="aboutTitle">
+      Une formation solide.<br>
+      <em>Une vocation durable.</em>
+    </h2>
+  </div>
+  <div class="section-copy">
+    <p data-i18n="aboutP1">
+      L’École de Ministère Ombre de l’Éternel accompagne les serviteurs de Dieu,
+      les responsables d’églises et les étudiants qui souhaitent approfondir leur
+      connaissance biblique, développer leur leadership et servir avec intégrité.
+    </p>
+    <p data-i18n="aboutP2">
+      L’E.M.O.E est une institution chrétienne évangélique.
+      Son enseignement repose sur la fidélité aux Saintes Écritures,
+      la formation du caractère et la préparation pratique au service de Dieu et de l’Église.
+    </p>
+  </div>
+</section>
+<section class="section">
+  <div>
+    <div class="eyebrow" data-i18n="identityEyebrow">
+      NOTRE IDENTITÉ
+    </div>
+    <h2 data-i18n-html="identityTitle">
+      Foi, discipline<br>
+      <em>et vie communautaire.</em>
+    </h2>
+  </div>
+  <div class="panel identity-panel">
+    <p data-i18n-html="identityP1">
+      Tous les étudiants doivent signer et respecter strictement une Déclaration de foi —
+      <strong>Statement of Faith</strong> — ainsi qu’un Engagement de vie en communauté —
+      <strong>Community Covenant</strong>.
+    </p>
+    <p data-i18n="identityP2">
+      Ces engagements définissent les valeurs chrétiennes évangéliques,
+      le comportement attendu et le mode de vie quotidien au sein de l’établissement.
+    </p>
+  </div>
+</section>
+<section id="programmes" class="section programs-section">
+  <div class="programs-header">
+    <div>
+      <div class="eyebrow" data-i18n="programsEyebrow">
+        PARCOURS ACADÉMIQUES
       </div>
-      <div class="stats" aria-label="Chiffres clés">
-        <div class="stat"><strong>09</strong><span data-i18n="statCountries">Pays représentés</span></div>
-        <div class="stat"><strong>03</strong><span data-i18n="statCycles">Cycles académiques</span></div>
-        <div class="stat"><strong>FR · EN</strong><span data-i18n="statBilingual">Formation bilingue</span></div>
-      </div>
-    </section>
-
-    <section id="ecole" class="section">
-      <div>
-        <div class="eyebrow" data-i18n="aboutEyebrow">À PROPOS DE L’E.M.O.E</div>
-        <h2 data-i18n-html="aboutTitle">Une formation solide.<br><em>Une vocation durable.</em></h2>
-      </div>
-      <div class="section-copy">
-        <p data-i18n="aboutP1">L’École de Ministère Ombre de l’Éternel accompagne les serviteurs de Dieu, les responsables d’églises et les étudiants qui souhaitent approfondir leur connaissance biblique, développer leur leadership et servir avec intégrité.</p>
-        <p data-i18n="aboutP2">L’E.M.O.E est une institution chrétienne évangélique. Son enseignement repose sur la fidélité aux Saintes Écritures, la formation du caractère et la préparation pratique au service de Dieu et de l’Église.</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div>
-        <div class="eyebrow" data-i18n="identityEyebrow">NOTRE IDENTITÉ</div>
-        <h2 data-i18n-html="identityTitle">Foi, discipline<br><em>et vie communautaire.</em></h2>
-      </div>
-      <div class="panel identity-panel">
-        <p data-i18n-html="identityP1">Tous les étudiants doivent signer et respecter strictement une Déclaration de foi — <strong>Statement of Faith</strong> — ainsi qu’un Engagement de vie en communauté — <strong>Community Covenant</strong>.</p>
-        <p data-i18n="identityP2">Ces engagements définissent les valeurs chrétiennes évangéliques, le comportement attendu et le mode de vie quotidien au sein de l’établissement.</p>
-      </div>
-    </section>
-
-    <section id="programmes" class="section programs-section">
-      <div class="programs-header">
-        <div>
-          <div class="eyebrow" data-i18n="programsEyebrow">PARCOURS ACADÉMIQUES</div>
-          <h2 data-i18n-html="programsTitle">Choisissez votre<br><em>prochain niveau.</em></h2>
+      <h2 data-i18n-html="programsTitle">
+        Choisissez votre<br>
+        <em>prochain niveau.</em>
+      </h2>
+    </div>
+    <div class="carousel-controls" aria-label="Contrôles du carrousel">
+      <button id="program-prev" class="icon-button" type="button" aria-label="Programme précédent">
+        ←
+      </button>
+      <button id="program-next" class="icon-button" type="button" aria-label="Programme suivant">
+        →
+      </button>
+    </div>
+  </div>
+  <div
+    class="carousel"
+    id="program-carousel"
+    aria-roledescription="carrousel"
+    aria-label="Niveaux académiques">
+    <div class="carousel-rail" id="program-rail">
+      <article class="program-card is-active" data-level="Licence" aria-hidden="false">
+        <div class="program-content">
+          <span class="program-index" data-i18n="licenseIndex">
+            01 / LICENCE
+          </span>
+          <h3 data-i18n="licenseCardTitle">
+            Théologie pratique
+          </h3>
+          <p data-i18n="licenseCardCopy">
+            Une formation fondamentale pour développer une base biblique,
+            théologique et pratique solide.
+          </p>
+          <button
+            class="button button-outline select-level"
+            type="button"
+            data-level="Licence"
+            data-i18n="licenseButton">
+            Choisir la Licence <span aria-hidden="true">↗</span>
+          </button>
         </div>
-        <div class="carousel-controls" aria-label="Contrôles du carrousel">
-          <button id="program-prev" class="icon-button" type="button" aria-label="Programme précédent">←</button>
-          <button id="program-next" class="icon-button" type="button" aria-label="Programme suivant">→</button>
+        <div class="program-aside">
+          <strong>01</strong>
+          <span data-i18n="licenseAside">CYCLE FONDAMENTAL</span>
         </div>
-      </div>
-      <div class="carousel" id="program-carousel" aria-roledescription="carrousel" aria-label="Niveaux académiques">
-        <div class="carousel-rail" id="program-rail">
-          <article class="program-card is-active" data-level="Licence" aria-hidden="false">
-            <div class="program-content"><span class="program-index" data-i18n="licenseIndex">01 / LICENCE</span><h3 data-i18n="licenseCardTitle">Théologie pratique</h3><p data-i18n="licenseCardCopy">Une formation fondamentale pour développer une base biblique, théologique et pratique solide.</p><button class="button button-outline select-level" type="button" data-level="Licence" data-i18n="licenseButton">Choisir la Licence <span aria-hidden="true">↗</span></button></div>
-            <div class="program-aside"><strong>01</strong><span data-i18n="licenseAside">CYCLE FONDAMENTAL</span></div>
-          </article>
-          <article class="program-card" data-level="Master" aria-hidden="true">
-            <div class="program-content"><span class="program-index" data-i18n="masterIndex">02 / MASTER</span><h3 data-i18n="masterCardTitle">Théologie pratique</h3><p data-i18n="masterCardCopy">Un parcours d’approfondissement destiné aux titulaires d’une Licence en théologie pratique.</p><button class="button button-outline select-level" type="button" data-level="Master" data-i18n="masterButton">Choisir le Master <span aria-hidden="true">↗</span></button></div>
-            <div class="program-aside"><strong>02</strong><span data-i18n="masterAside">CYCLE AVANCÉ</span></div>
-          </article>
-          <article class="program-card" data-level="Doctorat" aria-hidden="true">
-            <div class="program-content"><span class="program-index" data-i18n="doctorateIndex">03 / DOCTORAT</span><h3 data-i18n="doctorateCardTitle">Théologie pratique</h3><p data-i18n="doctorateCardCopy">Un parcours de recherche avancée destiné aux titulaires d’un Master en théologie pratique.</p><button class="button button-outline select-level" type="button" data-level="Doctorat" data-i18n="doctorateButton">Choisir le Doctorat <span aria-hidden="true">↗</span></button></div>
-            <div class="program-aside"><strong>03</strong><span data-i18n="doctorateAside">RECHERCHE</span></div>
-          </article>
+      </article>
+      <article class="program-card" data-level="Master" aria-hidden="true">
+        <div class="program-content">
+          <span class="program-index" data-i18n="masterIndex">
+            02 / MASTER
+          </span>
+          <h3 data-i18n="masterCardTitle">
+            Théologie pratique
+          </h3>
+          <p data-i18n="masterCardCopy">
+            Un parcours d’approfondissement destiné aux titulaires
+            d’une Licence en théologie pratique.
+          </p>
+          <button
+            class="button button-outline select-level"
+            type="button"
+            data-level="Master"
+            data-i18n="masterButton">
+            Choisir le Master <span aria-hidden="true">↗</span>
+          </button>
         </div>
-      </div>
-      <div class="carousel-footer">
-        <p class="carousel-note" data-i18n="carouselNote">Le carrousel défile automatiquement. Utilisez les flèches pour le contrôler.</p>
-        <div class="carousel-dots" role="tablist" aria-label="Choisir un programme">
-          <button type="button" role="tab" aria-label="Licence" aria-current="true" data-slide="0"></button>
-          <button type="button" role="tab" aria-label="Master" aria-current="false" data-slide="1"></button>
-          <button type="button" role="tab" aria-label="Doctorat" aria-current="false" data-slide="2"></button>
+        <div class="program-aside">
+          <strong>02</strong>
+          <span data-i18n="masterAside">CYCLE AVANCÉ</span>
         </div>
-      </div>
-    </section>
-
-    <section id="licence" class="section">
-      <div><div class="eyebrow" data-i18n="licenseDetailEyebrow">01 · LICENCE</div><h2 data-i18n-html="licenseDetailTitle">Licence en<br><em>théologie pratique.</em></h2></div>
-      <div class="subjects">
-        <div class="subject" data-i18n="subject1">Introduction à la théologie</div><div class="subject" data-i18n="subject2">Homilétique</div><div class="subject" data-i18n="subject3">Gestion financière d’une église locale</div><div class="subject" data-i18n="subject4">Herméneutique</div><div class="subject" data-i18n="subject5">Eschatologie</div><div class="subject" data-i18n="subject6">Angélologie</div><div class="subject" data-i18n="subject7">Démonologie</div><div class="subject" data-i18n="subject8">Leadership biblique</div>
-      </div>
-    </section>
-
-    <section id="master" class="section">
-      <div><div class="eyebrow" data-i18n="masterDetailEyebrow">02 · MASTER</div><h2 data-i18n-html="masterDetailTitle">Master en<br><em>théologie pratique.</em></h2></div>
-      <div class="panel degree-panel"><p data-i18n-html="masterP1">Pour postuler au Master, il est obligatoire d’avoir obtenu une <strong>Licence en théologie pratique</strong>.</p><p data-i18n="masterP2">Le Master permet d’approfondir la recherche, l’analyse biblique, la réflexion théologique et le développement stratégique du ministère.</p></div>
-    </section>
-
-    <section id="doctorat" class="section">
-      <div><div class="eyebrow" data-i18n="doctorateDetailEyebrow">03 · DOCTORAT</div><h2 data-i18n-html="doctorateDetailTitle">Doctorat en<br><em>théologie pratique.</em></h2></div>
-      <div class="panel degree-panel"><p data-i18n-html="doctorateP1">Pour postuler au Doctorat, il est obligatoire d’avoir obtenu un <strong>Master en théologie pratique</strong>.</p><p data-i18n="doctorateP2">Le Doctorat est orienté vers la recherche avancée, la contribution scientifique et l’accompagnement de projets de transformation ecclésiale.</p></div>
-    </section>
-
-    <section id="admissions" class="section admissions">
-      <div><div class="eyebrow" data-i18n="admissionsEyebrow">ADMISSIONS</div><h2 data-i18n-html="admissionsTitle">Préparez votre<br><em>prochaine étape.</em></h2></div>
-      <div class="admissions-grid">
-        <article class="panel admission-card"><h3 data-i18n="conditionTitle">Conditions générales</h3><p data-i18n="conditionCopy">Chaque étudiant doit accepter l’identité chrétienne évangélique de l’E.M.O.E.</p><p data-i18n="conditionCopy2">La signature du Statement of Faith et du Community Covenant est obligatoire.</p></article>
-        <article class="panel admission-card"><h3 data-i18n="documentsTitle">Documents à fournir</h3><ul><li data-i18n="doc1">Lettre d’intention</li><li data-i18n="doc2">Pièce d’identité</li><li data-i18n="doc3">Photo d’identité format passeport</li></ul></article>
-        <article class="panel admission-card"><h3 data-i18n="feesTitle">Frais</h3><p data-i18n-html="feesP1">Frais d’inscription : <strong>10 $</strong></p><p data-i18n-html="feesP2">Frais de formation : <strong>0 $</strong></p></article>
-        <article class="panel admission-card"><h3 data-i18n="calendarTitle">Calendrier</h3><p data-i18n-html="calendarP1">Ouverture des inscriptions : <strong>Décembre</strong></p><p data-i18n-html="calendarP2">Début des cours : <strong>Mars</strong></p></article>
-      </div>
-      <button class="button button-primary" type="button" data-open-modal data-i18n="admissionOpen">Ouvrir le formulaire d’admission <span aria-hidden="true">↗</span></button>
-    </section>
-
-    <section class="section">
-      <div><div class="eyebrow" data-i18n="countriesEyebrow">PRÉSENCE INTERNATIONALE</div><h2 data-i18n-html="countriesTitle">Une école au service<br><em>des nations.</em></h2></div>
-      <div class="country-list" aria-label="Pays représentés">
-        <span class="country"><i>🇨🇩</i> RDC</span><span class="country"><i>🇺🇬</i> Ouganda</span><span class="country"><i>🇦🇴</i> Angola</span><span class="country"><i>🇿🇲</i> Zambie</span><span class="country"><i>🇫🇷</i> France</span><span class="country"><i>🇨🇦</i> Canada</span><span class="country"><i>🇬🇧</i> Angleterre</span><span class="country"><i>🇨🇾</i> Chypre</span><span class="country"><i>🇺🇸</i> États-Unis</span>
-      </div>
-    </section>
-
-    <section id="contact" class="section contact">
-      <div>
-        <div class="eyebrow" data-i18n="contactEyebrow">CONTACT · ADMISSIONS INTERNATIONALES</div>
-        <h2 data-i18n-html="contactTitle">Votre appel mérite<br><em>une préparation d’excellence.</em></h2>
-        <div class="contact-details">
-          <p><strong data-i18n="addressLabel">Adresse :</strong> <span data-i18n="addressValue">Londres, Angleterre</span></p>
-          <p><strong data-i18n="phoneLabel">Téléphone :</strong> <a href="tel:+33670985008">+33 6 70 98 50 08</a></p>
-          <p><strong>WhatsApp :</strong> <a href="https://wa.me/33670985008" target="_blank" rel="noopener noreferrer">+33 6 70 98 50 08</a></p>
-          <p><strong>Email :</strong> <a href="mailto:ecoleombredeleternel@gmail.com">ecoleombredeleternel@gmail.com</a></p>
+      </article>
+      <article class="program-card" data-level="Doctorat" aria-hidden="true">
+        <div class="program-content">
+          <span class="program-index" data-i18n="doctorateIndex">
+            03 / DOCTORAT
+          </span>
+          <h3 data-i18n="doctorateCardTitle">
+            Théologie pratique
+          </h3>
+          <p data-i18n="doctorateCardCopy">
+            Un parcours de recherche avancée destiné aux titulaires
+            d’un Master en théologie pratique.
+          </p>
+          <button
+            class="button button-outline select-level"
+            type="button"
+            data-level="Doctorat"
+            data-i18n="doctorateButton">
+            Choisir le Doctorat <span aria-hidden="true">↗</span>
+          </button>
         </div>
-      </div>
-      <aside class="panel contact-panel"><div class="eyebrow" data-i18n="contactCardEyebrow">CANDIDATURE</div><p data-i18n="contactCardCopy">Votre formulaire est transmis de manière sécurisée à l’équipe des admissions.</p><button class="button button-primary" type="button" data-open-modal data-i18n="contactApply">Envoyer ma candidature <span aria-hidden="true">↗</span></button></aside>
-    </section>
-
-    <section class="section social-section">
-      <div><div class="eyebrow" data-i18n="socialEyebrow">RÉSEAUX SOCIAUX</div><h2 data-i18n-html="socialTitle">Restons<br><em>connectés.</em></h2></div>
-      <div class="social-links">
-        <!-- Remplace seulement les 3 href par les liens exacts de tes comptes. -->
-        <a class="social-link" data-social="facebook" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de l’E.M.O.E" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.8-4.7 4.56-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.24h3.35l-.54 3.49H13.9V24C19.61 23.1 24 18.1 24 12.07Z"/></svg></a>
-        <a class="social-link" data-social="instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de l’E.M.O.E" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 0h9.2C20.69 0 24 3.31 24 7.4v9.2c0 4.09-3.31 7.4-7.4 7.4H7.4C3.31 24 0 20.69 0 16.6V7.4C0 3.31 3.31 0 7.4 0Zm-.3 2.4A4.7 4.7 0 0 0 2.4 7.1v9.8a4.7 4.7 0 0 0 4.7 4.7h9.8a4.7 4.7 0 0 0 4.7-4.7V7.1a4.7 4.7 0 0 0-4.7-4.7H7.1Zm9.95 1.8a1.44 1.44 0 1 1 0 2.88 1.44 1.44 0 0 1 0-2.88ZM12 5.8A6.2 6.2 0 1 1 12 18.2 6.2 6.2 0 0 1 12 5.8Zm0 2.4A3.8 3.8 0 1 0 12 15.8 3.8 3.8 0 0 0 12 8.2Z"/></svg></a>
-        <a class="social-link" data-social="youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube de l’E.M.O.E" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3.03 3.03 0 0 0-2.13-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.37.51A3.03 3.03 0 0 0 .5 6.2C0 8.07 0 12 0 12s0 3.93.5 5.8a3.03 3.03 0 0 0 2.13 2.14c1.87.51 9.37.51 9.37.51s7.5 0 9.37-.51a3.03 3.03 0 0 0 2.13-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.8ZM9.6 15.58V8.42L15.87 12 9.6 15.58Z"/></svg></a>
-        <p class="social-help" data-i18n="socialHelp">Cliquez sur un logo pour ouvrir le réseau social.</p>
-      </div>
-    </section>
+        <div class="program-aside">
+          <strong>03</strong>
+          <span data-i18n="doctorateAside">RECHERCHE</span>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="carousel-footer">
+    <p class="carousel-note" data-i18n="carouselNote">
+      Le carrousel défile automatiquement.
+      Utilisez les flèches pour le contrôler.
+    </p>
+    <div class="carousel-dots" role="tablist" aria-label="Choisir un programme">
+      <button type="button" role="tab" aria-label="Licence" aria-current="true" data-slide="0"></button>
+      <button type="button" role="tab" aria-label="Master" aria-current="false" data-slide="1"></button>
+      <button type="button" role="tab" aria-label="Doctorat" aria-current="false" data-slide="2"></button>
+    </div>
+  </div>
+</section>
+<section id="licence" class="section">
+  <div>
+    <div class="eyebrow" data-i18n="licenseDetailEyebrow">
+      01 · LICENCE
+    </div>
+    <h2 data-i18n-html="licenseDetailTitle">
+      Licence en<br>
+      <em>théologie pratique.</em>
+    </h2>
+  </div>
+  <div class="subjects">
+    <div class="subject" data-i18n="subject1">Introduction à la théologie</div>
+    <div class="subject" data-i18n="subject2">Homilétique</div>
+    <div class="subject" data-i18n="subject3">Gestion financière d’une église locale</div>
+    <div class="subject" data-i18n="subject4">Herméneutique</div>
+    <div class="subject" data-i18n="subject5">Eschatologie</div>
+    <div class="subject" data-i18n="subject6">Angélologie</div>
+    <div class="subject" data-i18n="subject7">Démonologie</div>
+    <div class="subject" data-i18n="subject8">Leadership biblique</div>
+  </div>
+</section>
+<section id="master" class="section">
+  <div>
+    <div class="eyebrow" data-i18n="masterDetailEyebrow">
+      02 · MASTER
+    </div>
+    <h2 data-i18n-html="masterDetailTitle">
+      Master en<br>
+      <em>théologie pratique.</em>
+    </h2>
+  </div>
+  <div class="panel degree-panel">
+    <p data-i18n-html="masterP1">
+      Pour postuler au Master, il est obligatoire d’avoir obtenu une
+      <strong>Licence en théologie pratique</strong>.
+    </p>
+    <p data-i18n="masterP2">
+      Le Master permet d’approfondir la recherche, l’analyse biblique,
+      la réflexion théologique et le développement stratégique du ministère.
+    </p>
+  </div>
+</section>
+<section id="doctorat" class="section">
+  <div>
+    <div class="eyebrow" data-i18n="doctorateDetailEyebrow">
+      03 · DOCTORAT
+    </div>
+    <h2 data-i18n-html="doctorateDetailTitle">
+      Doctorat en<br>
+      <em>théologie pratique.</em>
+    </h2>
+  </div>
+  <div class="panel degree-panel">
+    <p data-i18n-html="doctorateP1">
+      Pour postuler au Doctorat, il est obligatoire d’avoir obtenu un
+      <strong>Master en théologie pratique</strong>.
+    </p>
+    <p data-i18n="doctorateP2">
+      Le Doctorat est orienté vers la recherche avancée,
+      la contribution scientifique et l’accompagnement de projets
+      de transformation ecclésiale.
+    </p>
+  </div>
+</section>
+<section id="admissions" class="section admissions">
+  <div>
+    <div class="eyebrow" data-i18n="admissionsEyebrow">
+      ADMISSIONS
+    </div>
+    <h2 data-i18n-html="admissionsTitle">
+      Préparez votre<br>
+      <em>prochaine étape.</em>
+    </h2>
+  </div>
+  <div class="admissions-grid">
+    <article class="panel admission-card">
+      <h3 data-i18n="conditionTitle">
+        Conditions générales
+      </h3>
+      <p data-i18n="conditionCopy">
+        Chaque étudiant doit accepter l’identité chrétienne évangélique de l’E.M.O.E.
+      </p>
+      <p data-i18n="conditionCopy2">
+        La signature du Statement of Faith et du Community Covenant est obligatoire.
+      </p>
+    </article>
+    <article class="panel admission-card">
+      <h3 data-i18n="documentsTitle">
+        Documents à fournir
+      </h3>
+      <ul>
+        <li data-i18n="doc1">Lettre d’intention</li>
+        <li data-i18n="doc2">Pièce d’identité</li>
+        <li data-i18n="doc3">Photo d’identité format passeport</li>
+      </ul>
+    </article>
+    <article class="panel admission-card">
+      <h3 data-i18n="feesTitle">
+        Frais
+      </h3>
+      <p data-i18n-html="feesP1">
+        Frais d’inscription : <strong>10 $</strong>
+      </p>
+      <p data-i18n-html="feesP2">
+        Frais de formation : <strong>0 $</strong>
+      </p>
+    </article>
+    <article class="panel admission-card">
+      <h3 data-i18n="calendarTitle">
+        Calendrier
+      </h3>
+      <p data-i18n-html="calendarP1">
+        Ouverture des inscriptions : <strong>Décembre</strong>
+      </p>
+      <p data-i18n-html="calendarP2">
+        Début des cours : <strong>Mars</strong>
+      </p>
+    </article>
+  </div>
+  <button
+    class="button button-primary"
+    type="button"
+    data-open-modal
+    data-i18n="admissionOpen">
+    Ouvrir le formulaire d’admission <span aria-hidden="true">↗</span>
+  </button>
+</section>
+<section class="section">
+  <div>
+    <div class="eyebrow" data-i18n="countriesEyebrow">
+      PRÉSENCE INTERNATIONALE
+    </div>
+    <h2 data-i18n-html="countriesTitle">
+      Une école au service<br>
+      <em>des nations.</em>
+    </h2>
+  </div>
+  <div class="country-list" aria-label="Pays représentés">
+    <span class="country"><i>🇨🇩</i> RDC</span>
+    <span class="country"><i>🇺🇬</i> Ouganda</span>
+    <span class="country"><i>🇦🇴</i> Angola</span>
+    <span class="country"><i>🇿🇲</i> Zambie</span>
+    <span class="country"><i>🇫🇷</i> France</span>
+    <span class="country"><i>🇨🇦</i> Canada</span>
+    <span class="country"><i>🇬🇧</i> Angleterre</span>
+    <span class="country"><i>🇨🇾</i> Chypre</span>
+    <span class="country"><i>🇺🇸</i> États-Unis</span>
+  </div>
+</section>
+<section id="contact" class="section contact">
+  <div>
+    <div class="eyebrow" data-i18n="contactEyebrow">
+      CONTACT · ADMISSIONS INTERNATIONALES
+    </div>
+    <h2 data-i18n-html="contactTitle">
+      Votre appel mérite<br>
+      <em>une préparation d’excellence.</em>
+    </h2>
+    <div class="contact-details">
+      <p>
+        <strong data-i18n="addressLabel">Adresse :</strong>
+        <span data-i18n="addressValue">Londres, Angleterre</span>
+      </p>
+      <p>
+        <strong data-i18n="phoneLabel">Téléphone :</strong>
+        <a href="tel:+33670985008">+33 6 70 98 50 08</a>
+      </p>
+      <p>
+        <strong>WhatsApp :</strong>
+        <a
+          href="https://wa.me/33670985008"
+          target="_blank"
+          rel="noopener noreferrer">
+          +33 6 70 98 50 08
+        </a>
+      </p>
+      <p>
+        <strong>Email :</strong>
+        <a href="mailto:ecoleombredeleternel@gmail.com">
+          ecoleombredeleternel@gmail.com
+        </a>
+      </p>
+    </div>
+  </div>
+  <aside class="panel contact-panel">
+    <div class="eyebrow" data-i18n="contactCardEyebrow">
+      CANDIDATURE
+    </div>
+    <p data-i18n="contactCardCopy">
+      Votre formulaire est transmis de manière sécurisée à l’équipe des admissions.
+    </p>
+    <button
+      class="button button-primary"
+      type="button"
+      data-open-modal
+      data-i18n="contactApply">
+      Envoyer ma candidature <span aria-hidden="true">↗</span>
+    </button>
+  </aside>
+</section>
+<section class="section social-section">
+  <div>
+    <div class="eyebrow" data-i18n="socialEyebrow">
+      RÉSEAUX SOCIAUX
+    </div>
+    <h2 data-i18n-html="socialTitle">
+      Restons<br>
+      <em>connectés.</em>
+    </h2>
+  </div>
+  <div class="social-links">
+    <a
+      class="social-link"
+      data-social="facebook"
+      href="https://www.facebook.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Facebook de l’E.M.O.E"
+      title="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.8-4.7 4.56-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.24h3.35l-.54 3.49H13.9V24C19.61 23.1 24 18.1 24 12.07Z"/>
+      </svg>
+    </a>
+    <a
+      class="social-link"
+      data-social="instagram"
+      href="https://www.instagram.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Instagram de l’E.M.O.E"
+      title="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7.4 0h9.2C20.69 0 24 3.31 24 7.4v9.2c0 4.09-3.31 7.4-7.4 7.4H7.4C3.31 24 0 20.69 0 16.6V7.4C0 3.31 3.31 0 7.4 0Zm-.3 2.4A4.7 4.7 0 0 0 2.4 7.1v9.8a4.7 4.7 0 0 0 4.7 4.7h9.8a4.7 4.7 0 0 0 4.7-4.7V7.1a4.7 4.7 0 0 0-4.7-4.7H7.1Zm9.95 1.8a1.44 1.44 0 1 1 0 2.88 1.44 1.44 0 0 1 0-2.88ZM12 5.8A6.2 6.2 0 1 1 12 18.2 6.2 6.2 0 0 1 12 5.8Zm0 2.4A3.8 3.8 0 1 0 12 15.8 3.8 3.8 0 0 0 12 8.2Z"/>
+      </svg>
+    </a>
+    <a
+      class="social-link"
+      data-social="youtube"
+      href="https://www.youtube.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="YouTube de l’E.M.O.E"
+      title="YouTube">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M23.5 6.2a3.03 3.03 0 0 0-2.13-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.37.51A3.03 3.03 0 0 0 .5 6.2C0 8.07 0 12 0 12s0 3.93.5 5.8a3.03 3.03 0 0 0 2.13 2.14c1.87.51 9.37.51 9.37.51s7.5 0 9.37-.51a3.03 3.03 0 0 0 2.13-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.8ZM9.6 15.58V8.42L15.87 12 9.6 15.58Z"/>
+      </svg>
+    </a>
+    <p class="social-help" data-i18n="socialHelp">
+      Cliquez sur un logo pour ouvrir le réseau social.
+    </p>
+  </div>
+</section>
   </main>
-
-  <footer><span>© E.M.O.E — Ombre de l’Éternel</span><span>RDC · Ouganda · Angola · Zambie · France · Canada · Angleterre · Chypre · États-Unis</span></footer>
-
+  <footer>
+    <span>© E.M.O.E — Ombre de l’Éternel</span>
+<span>
+  RDC · Ouganda · Angola · Zambie · France · Canada · Angleterre · Chypre · États-Unis
+</span>
+  </footer>
   <dialog id="application-modal" aria-labelledby="form-title">
-    <form id="admission-form" class="application-form" novalidate>
-      <button class="close-button" type="button" id="close-modal" aria-label="Fermer">×</button>
-      <div class="eyebrow" data-i18n="formEyebrow">CANDIDATURE E.M.O.E</div>
-      <h2 id="form-title" data-i18n="formTitle">Formulaire d’admission</h2>
-      <p class="form-intro" data-i18n="formIntro">Après validation, votre candidature est envoyée directement à l’équipe des admissions.</p>
-      <p class="selected-level"><span data-i18n="selectedLevelLabel">Niveau demandé :</span> <span id="selected-level-value">Licence</span></p>
-      <input id="form-level" name="niveau" type="hidden" value="Licence">
-      <label class="honeypot" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
-      <div class="form-grid">
-        <label><span data-i18n="fieldLastName">Nom</span><input name="nom" autocomplete="family-name" required maxlength="90"></label>
-        <label><span data-i18n="fieldFirstName">Prénoms</span><input name="prenoms" autocomplete="given-name" required maxlength="90"></label>
-        <label><span data-i18n="fieldPostName">Post-nom</span><input name="postNom" required maxlength="90"></label>
-        <label><span data-i18n="fieldBirthDate">Date de naissance</span><input name="dateNaissance" type="date" required></label>
-        <label><span data-i18n="fieldPhone">Téléphone</span><input name="telephone" type="tel" autocomplete="tel" required maxlength="35"></label>
-        <label><span data-i18n="fieldEmail">Email</span><input name="email" type="email" autocomplete="email" required maxlength="254"></label>
-        <label><span data-i18n="fieldCountry">Pays</span><input name="pays" autocomplete="country-name" required maxlength="80"></label>
-        <label><span data-i18n="fieldCity">Ville</span><input name="ville" autocomplete="address-level2" required maxlength="90"></label>
-        <label class="wide"><span data-i18n="fieldChurch">Église de provenance</span><input name="eglise" required maxlength="160"></label>
-        <label class="wide"><span data-i18n="fieldRole">Fonction dans l’église</span><input name="fonction" required maxlength="160"></label>
-      </div>
-      <button id="form-submit" class="button button-primary form-submit" type="submit" data-i18n="formSubmit">Envoyer ma candidature <span aria-hidden="true">↗</span></button>
-      <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-    </form>
+<form id="admission-form" class="application-form" novalidate>
+  <button
+    class="close-button"
+    type="button"
+    id="close-modal"
+    aria-label="Fermer">
+    ×
+  </button>
+  <div class="eyebrow" data-i18n="formEyebrow">
+    CANDIDATURE E.M.O.E
+  </div>
+  <h2 id="form-title" data-i18n="formTitle">
+    Formulaire d’admission
+  </h2>
+  <p class="form-intro" data-i18n="formIntro">
+    Après validation, votre candidature est envoyée directement à l’équipe des admissions.
+  </p>
+  <p class="selected-level">
+    <span data-i18n="selectedLevelLabel">Niveau demandé :</span>
+    <span id="selected-level-value">Licence</span>
+  </p>
+  <input
+    id="form-level"
+    name="niveau"
+    type="hidden"
+    value="Licence">
+  <label class="honeypot" aria-hidden="true">
+    Website
+    <input
+      name="website"
+      type="text"
+      tabindex="-1"
+      autocomplete="off">
+  </label>
+  <div class="form-grid">
+    <label>
+      <span data-i18n="fieldLastName">Nom</span>
+      <input
+        name="nom"
+        autocomplete="family-name"
+        required
+        maxlength="90">
+    </label>
+    <label>
+      <span data-i18n="fieldFirstName">Prénoms</span>
+      <input
+        name="prenoms"
+        autocomplete="given-name"
+        required
+        maxlength="90">
+    </label>
+    <label>
+      <span data-i18n="fieldPostName">Post-nom</span>
+      <input
+        name="postNom"
+        required
+        maxlength="90">
+    </label>
+    <label>
+      <span data-i18n="fieldBirthDate">Date de naissance</span>
+      <input
+        name="dateNaissance"
+        type="date"
+        required>
+    </label>
+    <label>
+      <span data-i18n="fieldPhone">Téléphone</span>
+      <input
+        name="telephone"
+        type="tel"
+        autocomplete="tel"
+        required
+        maxlength="35">
+    </label>
+    <label>
+      <span data-i18n="fieldEmail">Email</span>
+      <input
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        maxlength="254">
+    </label>
+    <label>
+      <span data-i18n="fieldCountry">Pays</span>
+      <input
+        name="pays"
+        autocomplete="country-name"
+        required
+        maxlength="80">
+    </label>
+    <label>
+      <span data-i18n="fieldCity">Ville</span>
+      <input
+        name="ville"
+        autocomplete="address-level2"
+        required
+        maxlength="90">
+    </label>
+    <label class="wide">
+      <span data-i18n="fieldChurch">Église de provenance</span>
+      <input
+        name="eglise"
+        required
+        maxlength="160">
+    </label>
+    <label class="wide">
+      <span data-i18n="fieldRole">Fonction dans l’église</span>
+      <input
+        name="fonction"
+        required
+        maxlength="160">
+    </label>
+  </div>
+  <button
+    id="form-submit"
+    class="button button-primary form-submit"
+    type="submit"
+    data-i18n="formSubmit">
+    Envoyer ma candidature <span aria-hidden="true">↗</span>
+  </button>
+  <p
+    id="form-status"
+    class="form-status"
+    role="status"
+    aria-live="polite">
+  </p>
+</form>
   </dialog>
-
   <script>
-    /* Les URLs ci-dessous ouvrent les plateformes. Remplace-les par les liens directs des comptes E.M.O.E dès que tu les as. */
     const SOCIAL_URLS = {
       facebook: "https://www.facebook.com/",
       instagram: "https://www.instagram.com/",
       youtube: "https://www.youtube.com/"
     };
-
     const translations = {
       fr: {
-        pageTitle: "E.M.O.E — École de Ministère Ombre de l’Éternel", pageDescription: "École de Ministère Ombre de l’Éternel — formation internationale en théologie pratique.", schoolName: "École de Ministère Ombre de l’Éternel", navSchool: "L’école", navPrograms: "Programmes", navAdmissions: "Admissions", navContact: "Contact", navApply: "Candidater", heroEyebrow: "FORMATION · FOI · LEADERSHIP", heroTitle: "Former une génération<br><em>pour servir</em> le monde.", heroCopy: "Une école internationale chrétienne évangélique de théologie pratique, dédiée à l’excellence académique, à la maturité spirituelle et à l’impact du ministère.", heroApply: "Commencer une candidature ↗", heroPrograms: "Découvrir les programmes ↓", statCountries: "Pays représentés", statCycles: "Cycles académiques", statBilingual: "Formation bilingue",
-        aboutEyebrow: "À PROPOS DE L’E.M.O.E", aboutTitle: "Une formation solide.<br><em>Une vocation durable.</em>", aboutP1: "L’École de Ministère Ombre de l’Éternel accompagne les serviteurs de Dieu, les responsables d’églises et les étudiants qui souhaitent approfondir leur connaissance biblique, développer leur leadership et servir avec intégrité.", aboutP2: "L’E.M.O.E est une institution chrétienne évangélique. Son enseignement repose sur la fidélité aux Saintes Écritures, la formation du caractère et la préparation pratique au service de Dieu et de l’Église.", identityEyebrow: "NOTRE IDENTITÉ", identityTitle: "Foi, discipline<br><em>et vie communautaire.</em>", identityP1: "Tous les étudiants doivent signer et respecter strictement une Déclaration de foi — <strong>Statement of Faith</strong> — ainsi qu’un Engagement de vie en communauté — <strong>Community Covenant</strong>.", identityP2: "Ces engagements définissent les valeurs chrétiennes évangéliques, le comportement attendu et le mode de vie quotidien au sein de l’établissement.",
-        programsEyebrow: "PARCOURS ACADÉMIQUES", programsTitle: "Choisissez votre<br><em>prochain niveau.</em>", licenseIndex: "01 / LICENCE", licenseCardTitle: "Théologie pratique", licenseCardCopy: "Une formation fondamentale pour développer une base biblique, théologique et pratique solide.", licenseButton: "Choisir la Licence ↗", licenseAside: "CYCLE FONDAMENTAL", masterIndex: "02 / MASTER", masterCardTitle: "Théologie pratique", masterCardCopy: "Un parcours d’approfondissement destiné aux titulaires d’une Licence en théologie pratique.", masterButton: "Choisir le Master ↗", masterAside: "CYCLE AVANCÉ", doctorateIndex: "03 / DOCTORAT", doctorateCardTitle: "Théologie pratique", doctorateCardCopy: "Un parcours de recherche avancée destiné aux titulaires d’un Master en théologie pratique.", doctorateButton: "Choisir le Doctorat ↗", doctorateAside: "RECHERCHE", carouselNote: "Le carrousel défile automatiquement. Utilisez les flèches pour le contrôler.",
-        licenseDetailEyebrow: "01 · LICENCE", licenseDetailTitle: "Licence en<br><em>théologie pratique.</em>", subject1: "Introduction à la théologie", subject2: "Homilétique", subject3: "Gestion financière d’une église locale", subject4: "Herméneutique", subject5: "Eschatologie", subject6: "Angélologie", subject7: "Démonologie", subject8: "Leadership biblique", masterDetailEyebrow: "02 · MASTER", masterDetailTitle: "Master en<br><em>théologie pratique.</em>", masterP1: "Pour postuler au Master, il est obligatoire d’avoir obtenu une <strong>Licence en théologie pratique</strong>.", masterP2: "Le Master permet d’approfondir la recherche, l’analyse biblique, la réflexion théologique et le développement stratégique du ministère.", doctorateDetailEyebrow: "03 · DOCTORAT", doctorateDetailTitle: "Doctorat en<br><em>théologie pratique.</em>", doctorateP1: "Pour postuler au Doctorat, il est obligatoire d’avoir obtenu un <strong>Master en théologie pratique</strong>.", doctorateP2: "Le Doctorat est orienté vers la recherche avancée, la contribution scientifique et l’accompagnement de projets de transformation ecclésiale.",
-        admissionsEyebrow: "ADMISSIONS", admissionsTitle: "Préparez votre<br><em>prochaine étape.</em>", conditionTitle: "Conditions générales", conditionCopy: "Chaque étudiant doit accepter l’identité chrétienne évangélique de l’E.M.O.E.", conditionCopy2: "La signature du Statement of Faith et du Community Covenant est obligatoire.", documentsTitle: "Documents à fournir", doc1: "Lettre d’intention", doc2: "Pièce d’identité", doc3: "Photo d’identité format passeport", feesTitle: "Frais", feesP1: "Frais d’inscription : <strong>10 $</strong>", feesP2: "Frais de formation : <strong>0 $</strong>", calendarTitle: "Calendrier", calendarP1: "Ouverture des inscriptions : <strong>Décembre</strong>", calendarP2: "Début des cours : <strong>Mars</strong>", admissionOpen: "Ouvrir le formulaire d’admission ↗", countriesEyebrow: "PRÉSENCE INTERNATIONALE", countriesTitle: "Une école au service<br><em>des nations.</em>", contactEyebrow: "CONTACT · ADMISSIONS INTERNATIONALES", contactTitle: "Votre appel mérite<br><em>une préparation d’excellence.</em>", addressLabel: "Adresse :", addressValue: "Londres, Angleterre", phoneLabel: "Téléphone :", contactCardEyebrow: "CANDIDATURE", contactCardCopy: "Votre formulaire est transmis de manière sécurisée à l’équipe des admissions.", contactApply: "Envoyer ma candidature ↗", socialEyebrow: "RÉSEAUX SOCIAUX", socialTitle: "Restons<br><em>connectés.</em>", socialHelp: "Cliquez sur un logo pour ouvrir le réseau social.", formEyebrow: "CANDIDATURE E.M.O.E", formTitle: "Formulaire d’admission", formIntro: "Après validation, votre candidature est envoyée directement à l’équipe des admissions.", selectedLevelLabel: "Niveau demandé :", fieldLastName: "Nom", fieldFirstName: "Prénoms", fieldPostName: "Post-nom", fieldBirthDate: "Date de naissance", fieldPhone: "Téléphone", fieldEmail: "Email", fieldCountry: "Pays", fieldCity: "Ville", fieldChurch: "Église de provenance", fieldRole: "Fonction dans l’église", formSubmit: "Envoyer ma candidature ↗", sending: "Envoi sécurisé en cours…", success: "Candidature envoyée. L’équipe des admissions vous répondra bientôt.", invalid: "Veuillez remplir correctement tous les champs obligatoires.", error: "L’envoi a échoué. Réessayez dans quelques instants ou écrivez à ecoleombredeleternel@gmail.com.", languageLabel: "Passer en anglais"
+        pageTitle: "E.M.O.E — École de Ministère Ombre de l’Éternel",
+        pageDescription: "École de Ministère Ombre de l’Éternel — formation internationale en théologie pratique.",
+        schoolName: "École de Ministère Ombre de l’Éternel",
+        navSchool: "L’école",
+        navPrograms: "Programmes",
+        navAdmissions: "Admissions",
+        navContact: "Contact",
+        navSpace: "Espace E.M.O.E ↗",
+        navApply: "Candidater",
+        heroEyebrow: "FORMATION · FOI · LEADERSHIP",
+        heroTitle: "Former une génération<br><em>pour servir</em> le monde.",
+        heroCopy: "Une école internationale chrétienne évangélique de théologie pratique, dédiée à l’excellence académique, à la maturité spirituelle et à l’impact du ministère.",
+        heroApply: "Commencer une candidature ↗",
+        heroSpace: "Accéder à mon espace ↗",
+        heroPrograms: "Découvrir les programmes ↓",
+        statCountries: "Pays représentés",
+        statCycles: "Cycles académiques",
+        statBilingual: "Formation bilingue",
+        aboutEyebrow: "À PROPOS DE L’E.M.O.E",
+        aboutTitle: "Une formation solide.<br><em>Une vocation durable.</em>",
+        aboutP1: "L’École de Ministère Ombre de l’Éternel accompagne les serviteurs de Dieu, les responsables d’églises et les étudiants qui souhaitent approfondir leur connaissance biblique, développer leur leadership et servir avec intégrité.",
+        aboutP2: "L’E.M.O.E est une institution chrétienne évangélique. Son enseignement repose sur la fidélité aux Saintes Écritures, la formation du caractère et la préparation pratique au service de Dieu et de l’Église.",
+        identityEyebrow: "NOTRE IDENTITÉ",
+        identityTitle: "Foi, discipline<br><em>et vie communautaire.</em>",
+        identityP1: "Tous les étudiants doivent signer et respecter strictement une Déclaration de foi — <strong>Statement of Faith</strong> — ainsi qu’un Engagement de vie en communauté — <strong>Community Covenant</strong>.",
+        identityP2: "Ces engagements définissent les valeurs chrétiennes évangéliques, le comportement attendu et le mode de vie quotidien au sein de l’établissement.",
+        programsEyebrow: "PARCOURS ACADÉMIQUES",
+        programsTitle: "Choisissez votre<br><em>prochain niveau.</em>",
+        licenseIndex: "01 / LICENCE",
+        licenseCardTitle: "Théologie pratique",
+        licenseCardCopy: "Une formation fondamentale pour développer une base biblique, théologique et pratique solide.",
+        licenseButton: "Choisir la Licence ↗",
+        licenseAside: "CYCLE FONDAMENTAL",
+        masterIndex: "02 / MASTER",
+        masterCardTitle: "Théologie pratique",
+        masterCardCopy: "Un parcours d’approfondissement destiné aux titulaires d’une Licence en théologie pratique.",
+        masterButton: "Choisir le Master ↗",
+        masterAside: "CYCLE AVANCÉ",
+        doctorateIndex: "03 / DOCTORAT",
+        doctorateCardTitle: "Théologie pratique",
+        doctorateCardCopy: "Un parcours de recherche avancée destiné aux titulaires d’un Master en théologie pratique.",
+        doctorateButton: "Choisir le Doctorat ↗",
+        doctorateAside: "RECHERCHE",
+        carouselNote: "Le carrousel défile automatiquement. Utilisez les flèches pour le contrôler.",
+        licenseDetailEyebrow: "01 · LICENCE",
+        licenseDetailTitle: "Licence en<br><em>théologie pratique.</em>",
+        subject1: "Introduction à la théologie",
+        subject2: "Homilétique",
+        subject3: "Gestion financière d’une église locale",
+        subject4: "Herméneutique",
+        subject5: "Eschatologie",
+        subject6: "Angélologie",
+        subject7: "Démonologie",
+        subject8: "Leadership biblique",
+        masterDetailEyebrow: "02 · MASTER",
+        masterDetailTitle: "Master en<br><em>théologie pratique.</em>",
+        masterP1: "Pour postuler au Master, il est obligatoire d’avoir obtenu une <strong>Licence en théologie pratique</strong>.",
+        masterP2: "Le Master permet d’approfondir la recherche, l’analyse biblique, la réflexion théologique et le développement stratégique du ministère.",
+        doctorateDetailEyebrow: "03 · DOCTORAT",
+        doctorateDetailTitle: "Doctorat en<br><em>théologie pratique.</em>",
+        doctorateP1: "Pour postuler au Doctorat, il est obligatoire d’avoir obtenu un <strong>Master en théologie pratique</strong>.",
+        doctorateP2: "Le Doctorat est orienté vers la recherche avancée, la contribution scientifique et l’accompagnement de projets de transformation ecclésiale.",
+        admissionsEyebrow: "ADMISSIONS",
+        admissionsTitle: "Préparez votre<br><em>prochaine étape.</em>",
+        conditionTitle: "Conditions générales",
+        conditionCopy: "Chaque étudiant doit accepter l’identité chrétienne évangélique de l’E.M.O.E.",
+        conditionCopy2: "La signature du Statement of Faith et du Community Covenant est obligatoire.",
+        documentsTitle: "Documents à fournir",
+        doc1: "Lettre d’intention",
+        doc2: "Pièce d’identité",
+        doc3: "Photo d’identité format passeport",
+        feesTitle: "Frais",
+        feesP1: "Frais d’inscription : <strong>10 $</strong>",
+        feesP2: "Frais de formation : <strong>0 $</strong>",
+        calendarTitle: "Calendrier",
+        calendarP1: "Ouverture des inscriptions : <strong>Décembre</strong>",
+        calendarP2: "Début des cours : <strong>Mars</strong>",
+        admissionOpen: "Ouvrir le formulaire d’admission ↗",
+        countriesEyebrow: "PRÉSENCE INTERNATIONALE",
+        countriesTitle: "Une école au service<br><em>des nations.</em>",
+        contactEyebrow: "CONTACT · ADMISSIONS INTERNATIONALES",
+        contactTitle: "Votre appel mérite<br><em>une préparation d’excellence.</em>",
+        addressLabel: "Adresse :",
+        addressValue: "Londres, Angleterre",
+        phoneLabel: "Téléphone :",
+        contactCardEyebrow: "CANDIDATURE",
+        contactCardCopy: "Votre formulaire est transmis de manière sécurisée à l’équipe des admissions.",
+        contactApply: "Envoyer ma candidature ↗",
+        socialEyebrow: "RÉSEAUX SOCIAUX",
+        socialTitle: "Restons<br><em>connectés.</em>",
+        socialHelp: "Cliquez sur un logo pour ouvrir le réseau social.",
+        formEyebrow: "CANDIDATURE E.M.O.E",
+        formTitle: "Formulaire d’admission",
+        formIntro: "Après validation, votre candidature est envoyée directement à l’équipe des admissions.",
+        selectedLevelLabel: "Niveau demandé :",
+        fieldLastName: "Nom",
+        fieldFirstName: "Prénoms",
+        fieldPostName: "Post-nom",
+        fieldBirthDate: "Date de naissance",
+        fieldPhone: "Téléphone",
+        fieldEmail: "Email",
+        fieldCountry: "Pays",
+        fieldCity: "Ville",
+        fieldChurch: "Église de provenance",
+        fieldRole: "Fonction dans l’église",
+        formSubmit: "Envoyer ma candidature ↗",
+        sending: "Envoi sécurisé en cours…",
+        success: "Candidature envoyée. L’équipe des admissions vous répondra bientôt.",
+        invalid: "Veuillez remplir correctement tous les champs obligatoires.",
+        error: "L’envoi a échoué. Réessayez dans quelques instants ou écrivez à ecoleombredeleternel@gmail.com.",
+        languageLabel: "Passer en anglais"
       },
       en: {
-        pageTitle: "E.M.O.E — Eternal Shadow Ministry School", pageDescription: "Eternal Shadow Ministry School — international practical theology training.", schoolName: "Eternal Shadow Ministry School", navSchool: "The school", navPrograms: "Programs", navAdmissions: "Admissions", navContact: "Contact", navApply: "Apply", heroEyebrow: "TRAINING · FAITH · LEADERSHIP", heroTitle: "Raising a generation<br><em>to serve</em> the world.", heroCopy: "An international evangelical Christian school of practical theology, dedicated to academic excellence, spiritual maturity and ministry impact.", heroApply: "Start an application ↗", heroPrograms: "Explore programs ↓", statCountries: "Countries represented", statCycles: "Academic cycles", statBilingual: "Bilingual training",
-        aboutEyebrow: "ABOUT E.M.O.E", aboutTitle: "A strong education.<br><em>A lasting calling.</em>", aboutP1: "Eternal Shadow Ministry School supports servants of God, church leaders and students who wish to deepen their biblical knowledge, develop their leadership and serve with integrity.", aboutP2: "E.M.O.E is an evangelical Christian institution. Its teaching is grounded in faithfulness to Holy Scripture, character development and practical preparation for serving God and the Church.", identityEyebrow: "OUR IDENTITY", identityTitle: "Faith, discipline<br><em>and community life.</em>", identityP1: "All students must sign and strictly follow a Declaration of Faith — <strong>Statement of Faith</strong> — and a commitment to community life — <strong>Community Covenant</strong>.", identityP2: "These commitments define evangelical Christian values, expected conduct and daily life within the institution.",
-        programsEyebrow: "ACADEMIC PATHWAYS", programsTitle: "Choose your<br><em>next level.</em>", licenseIndex: "01 / BACHELOR", licenseCardTitle: "Practical theology", licenseCardCopy: "A foundational course to build a strong biblical, theological and practical base.", licenseButton: "Choose the Bachelor ↗", licenseAside: "FOUNDATION CYCLE", masterIndex: "02 / MASTER", masterCardTitle: "Practical theology", masterCardCopy: "An advanced course designed for holders of a Bachelor’s degree in practical theology.", masterButton: "Choose the Master ↗", masterAside: "ADVANCED CYCLE", doctorateIndex: "03 / DOCTORATE", doctorateCardTitle: "Practical theology", doctorateCardCopy: "An advanced research course designed for holders of a Master’s degree in practical theology.", doctorateButton: "Choose the Doctorate ↗", doctorateAside: "RESEARCH", carouselNote: "The carousel advances automatically. Use the arrows to control it.",
-        licenseDetailEyebrow: "01 · BACHELOR", licenseDetailTitle: "Bachelor in<br><em>practical theology.</em>", subject1: "Introduction to theology", subject2: "Homiletics", subject3: "Financial management of a local church", subject4: "Hermeneutics", subject5: "Eschatology", subject6: "Angelology", subject7: "Demonology", subject8: "Biblical leadership", masterDetailEyebrow: "02 · MASTER", masterDetailTitle: "Master in<br><em>practical theology.</em>", masterP1: "To apply for the Master’s degree, applicants must hold a <strong>Bachelor’s degree in practical theology</strong>.", masterP2: "The Master’s degree deepens research, biblical analysis, theological reflection and strategic ministry development.", doctorateDetailEyebrow: "03 · DOCTORATE", doctorateDetailTitle: "Doctorate in<br><em>practical theology.</em>", doctorateP1: "To apply for the Doctorate, applicants must hold a <strong>Master’s degree in practical theology</strong>.", doctorateP2: "The Doctorate focuses on advanced research, scholarly contribution and supporting church transformation projects.",
-        admissionsEyebrow: "ADMISSIONS", admissionsTitle: "Prepare your<br><em>next step.</em>", conditionTitle: "General requirements", conditionCopy: "Each student must accept the evangelical Christian identity of E.M.O.E.", conditionCopy2: "Signing the Statement of Faith and Community Covenant is mandatory.", documentsTitle: "Required documents", doc1: "Letter of intent", doc2: "Identity document", doc3: "Passport-size identity photo", feesTitle: "Fees", feesP1: "Registration fee: <strong>$10</strong>", feesP2: "Tuition fee: <strong>$0</strong>", calendarTitle: "Calendar", calendarP1: "Applications open: <strong>December</strong>", calendarP2: "Classes begin: <strong>March</strong>", admissionOpen: "Open the admission form ↗", countriesEyebrow: "INTERNATIONAL PRESENCE", countriesTitle: "A school serving<br><em>the nations.</em>", contactEyebrow: "CONTACT · INTERNATIONAL ADMISSIONS", contactTitle: "Your calling deserves<br><em>excellent preparation.</em>", addressLabel: "Address:", addressValue: "London, England", phoneLabel: "Phone:", contactCardEyebrow: "APPLICATION", contactCardCopy: "Your form is sent securely to the admissions team.", contactApply: "Send my application ↗", socialEyebrow: "SOCIAL MEDIA", socialTitle: "Let’s stay<br><em>connected.</em>", socialHelp: "Click a logo to open the social network.", formEyebrow: "E.M.O.E APPLICATION", formTitle: "Admission form", formIntro: "Once validated, your application is sent directly to the admissions team.", selectedLevelLabel: "Requested level:", fieldLastName: "Last name", fieldFirstName: "First name(s)", fieldPostName: "Middle / other name", fieldBirthDate: "Date of birth", fieldPhone: "Phone", fieldEmail: "Email", fieldCountry: "Country", fieldCity: "City", fieldChurch: "Church of origin", fieldRole: "Role in the church", formSubmit: "Send my application ↗", sending: "Sending securely…", success: "Application sent. The admissions team will reply soon.", invalid: "Please complete all required fields correctly.", error: "Sending failed. Please try again shortly or email ecoleombredeleternel@gmail.com.", languageLabel: "Switch to French"
+        pageTitle: "E.M.O.E — Eternal Shadow Ministry School",
+        pageDescription: "Eternal Shadow Ministry School — international practical theology training.",
+        schoolName: "Eternal Shadow Ministry School",
+        navSchool: "The school",
+        navPrograms: "Programs",
+        navAdmissions: "Admissions",
+        navContact: "Contact",
+        navSpace: "E.M.O.E Space ↗",
+        navApply: "Apply",
+        heroEyebrow: "TRAINING · FAITH · LEADERSHIP",
+        heroTitle: "Raising a generation<br><em>to serve</em> the world.",
+        heroCopy: "An international evangelical Christian school of practical theology, dedicated to academic excellence, spiritual maturity and ministry impact.",
+        heroApply: "Start an application ↗",
+        heroSpace: "Access my space ↗",
+        heroPrograms: "Explore programs ↓",
+        statCountries: "Countries represented",
+        statCycles: "Academic cycles",
+        statBilingual: "Bilingual training",
+        aboutEyebrow: "ABOUT E.M.O.E",
+        aboutTitle: "A strong education.<br><em>A lasting calling.</em>",
+        aboutP1: "Eternal Shadow Ministry School supports servants of God, church leaders and students who wish to deepen their biblical knowledge, develop their leadership and serve with integrity.",
+        aboutP2: "E.M.O.E is an evangelical Christian institution. Its teaching is grounded in faithfulness to Holy Scripture, character development and practical preparation for serving God and the Church.",
+        identityEyebrow: "OUR IDENTITY",
+        identityTitle: "Faith, discipline<br><em>and community life.</em>",
+        identityP1: "All students must sign and strictly follow a Declaration of Faith — <strong>Statement of Faith</strong> — and a commitment to community life — <strong>Community Covenant</strong>.",
+        identityP2: "These commitments define evangelical Christian values, expected conduct and daily life within the institution.",
+        programsEyebrow: "ACADEMIC PATHWAYS",
+        programsTitle: "Choose your<br><em>next level.</em>",
+        licenseIndex: "01 / BACHELOR",
+        licenseCardTitle: "Practical theology",
+        licenseCardCopy: "A foundational course to build a strong biblical, theological and practical base.",
+        licenseButton: "Choose the Bachelor ↗",
+        licenseAside: "FOUNDATION CYCLE",
+        masterIndex: "02 / MASTER",
+        masterCardTitle: "Practical theology",
+        masterCardCopy: "An advanced course designed for holders of a Bachelor’s degree in practical theology.",
+        masterButton: "Choose the Master ↗",
+        masterAside: "ADVANCED CYCLE",
+        doctorateIndex: "03 / DOCTORATE",
+        doctorateCardTitle: "Practical theology",
+        doctorateCardCopy: "An advanced research course designed for holders of a Master’s degree in practical theology.",
+        doctorateButton: "Choose the Doctorate ↗",
+        doctorateAside: "RESEARCH",
+        carouselNote: "The carousel advances automatically. Use the arrows to control it.",
+        licenseDetailEyebrow: "01 · BACHELOR",
+        licenseDetailTitle: "Bachelor in<br><em>practical theology.</em>",
+        subject1: "Introduction to theology",
+        subject2: "Homiletics",
+        subject3: "Financial management of a local church",
+        subject4: "Hermeneutics",
+        subject5: "Eschatology",
+        subject6: "Angelology",
+        subject7: "Demonology",
+        subject8: "Biblical leadership",
+        masterDetailEyebrow: "02 · MASTER",
+        masterDetailTitle: "Master in<br><em>practical theology.</em>",
+        masterP1: "To apply for the Master’s degree, applicants must hold a <strong>Bachelor’s degree in practical theology</strong>.",
+        masterP2: "The Master’s degree deepens research, biblical analysis, theological reflection and strategic ministry development.",
+        doctorateDetailEyebrow: "03 · DOCTORATE",
+        doctorateDetailTitle: "Doctorate in<br><em>practical theology.</em>",
+        doctorateP1: "To apply for the Doctorate, applicants must hold a <strong>Master’s degree in practical theology</strong>.",
+        doctorateP2: "The Doctorate focuses on advanced research, scholarly contribution and supporting church transformation projects.",
+        admissionsEyebrow: "ADMISSIONS",
+        admissionsTitle: "Prepare your<br><em>next step.</em>",
+        conditionTitle: "General requirements",
+        conditionCopy: "Each student must accept the evangelical Christian identity of E.M.O.E.",
+        conditionCopy2: "Signing the Statement of Faith and Community Covenant is mandatory.",
+        documentsTitle: "Required documents",
+        doc1: "Letter of intent",
+        doc2: "Identity document",
+        doc3: "Passport-size identity photo",
+        feesTitle: "Fees",
+        feesP1: "Registration fee: <strong>$10</strong>",
+        feesP2: "Tuition fee: <strong>$0</strong>",
+        calendarTitle: "Calendar",
+        calendarP1: "Applications open: <strong>December</strong>",
+        calendarP2: "Classes begin: <strong>March</strong>",
+        admissionOpen: "Open the admission form ↗",
+        countriesEyebrow: "INTERNATIONAL PRESENCE",
+        countriesTitle: "A school serving<br><em>the nations.</em>",
+        contactEyebrow: "CONTACT · INTERNATIONAL ADMISSIONS",
+        contactTitle: "Your calling deserves<br><em>excellent preparation.</em>",
+        addressLabel: "Address:",
+        addressValue: "London, England",
+        phoneLabel: "Phone:",
+        contactCardEyebrow: "APPLICATION",
+        contactCardCopy: "Your form is sent securely to the admissions team.",
+        contactApply: "Send my application ↗",
+        socialEyebrow: "SOCIAL MEDIA",
+        socialTitle: "Let’s stay<br><em>connected.</em>",
+        socialHelp: "Click a logo to open the social network.",
+        formEyebrow: "E.M.O.E APPLICATION",
+        formTitle: "Admission form",
+        formIntro: "Once validated, your application is sent directly to the admissions team.",
+        selectedLevelLabel: "Requested level:",
+        fieldLastName: "Last name",
+        fieldFirstName: "First name(s)",
+        fieldPostName: "Middle / other name",
+        fieldBirthDate: "Date of birth",
+        fieldPhone: "Phone",
+        fieldEmail: "Email",
+        fieldCountry: "Country",
+        fieldCity: "City",
+        fieldChurch: "Church of origin",
+        fieldRole: "Role in the church",
+        formSubmit: "Send my application ↗",
+        sending: "Sending securely…",
+        success: "Application sent. The admissions team will reply soon.",
+        invalid: "Please complete all required fields correctly.",
+        error: "Sending failed. Please try again shortly or email ecoleombredeleternel@gmail.com.",
+        languageLabel: "Switch to French"
       }
     };
-
     let language = "fr";
-    const languageToggle = document.getElementById("language-toggle");
+    const languageToggle =
+      document.getElementById("language-toggle");
     function translatePage() {
       const t = translations[language];
       document.documentElement.lang = language;
       document.title = t.pageTitle;
-      document.querySelector('meta[name="description"]').setAttribute("content", t.pageDescription);
-      document.querySelectorAll("[data-i18n]").forEach((element) => { element.textContent = t[element.dataset.i18n]; });
-      document.querySelectorAll("[data-i18n-html]").forEach((element) => { element.innerHTML = t[element.dataset.i18nHtml]; });
-      languageToggle.textContent = language === "fr" ? "EN" : "FR";
-      languageToggle.setAttribute("aria-label", t.languageLabel);
+      document
+        .querySelector('meta[name="description"]')
+        .setAttribute("content", t.pageDescription);
+      document
+        .querySelectorAll("[data-i18n]")
+        .forEach((element) => {
+          element.textContent = t[element.dataset.i18n];
+        });
+      document
+        .querySelectorAll("[data-i18n-html]")
+        .forEach((element) => {
+          element.innerHTML = t[element.dataset.i18nHtml];
+        });
+      languageToggle.textContent =
+        language === "fr" ? "EN" : "FR";
+      languageToggle.setAttribute(
+        "aria-label",
+        t.languageLabel
+      );
       updateSelectedLevel();
     }
-    languageToggle.addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; translatePage(); });
-
-    Object.entries(SOCIAL_URLS).forEach(([network, url]) => {
-      const link = document.querySelector(`[data-social="${network}"]`);
-      if (link && /^https:\/\//.test(url)) link.href = url;
+    languageToggle.addEventListener("click", () => {
+      language = language === "fr" ? "en" : "fr";
+      translatePage();
     });
-
-    const modal = document.getElementById("application-modal");
-    const admissionForm = document.getElementById("admission-form");
-    const formStatus = document.getElementById("form-status");
-    const formSubmit = document.getElementById("form-submit");
-    function openModal() { formStatus.textContent = ""; formStatus.classList.remove("error"); modal.showModal(); document.body.classList.add("modal-open"); }
-    function closeModal() { modal.close(); document.body.classList.remove("modal-open"); }
-    document.querySelectorAll("[data-open-modal]").forEach((button) => button.addEventListener("click", openModal));
-    document.getElementById("close-modal").addEventListener("click", closeModal);
-    modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
-    modal.addEventListener("close", () => document.body.classList.remove("modal-open"));
-
-    const rail = document.getElementById("program-rail");
-    const slides = Array.from(document.querySelectorAll(".program-card"));
-    const dots = Array.from(document.querySelectorAll("[data-slide]"));
-    const carousel = document.getElementById("program-carousel");
+    Object.entries(SOCIAL_URLS).forEach(([network, url]) => {
+      const link =
+        document.querySelector([data-social="${network}"]);
+      if (link && /^https:\/\//.test(url)) {
+        link.href = url;
+      }
+    });
+    const modal =
+      document.getElementById("application-modal");
+    const admissionForm =
+      document.getElementById("admission-form");
+    const formStatus =
+      document.getElementById("form-status");
+    const formSubmit =
+      document.getElementById("form-submit");
+    function openModal() {
+      formStatus.textContent = "";
+      formStatus.classList.remove("error");
+      modal.showModal();
+      document.body.classList.add("modal-open");
+    }
+    function closeModal() {
+      modal.close();
+      document.body.classList.remove("modal-open");
+    }
+    document
+      .querySelectorAll("[data-open-modal]")
+      .forEach((button) => {
+        button.addEventListener("click", openModal);
+      });
+    document
+      .getElementById("close-modal")
+      .addEventListener("click", closeModal);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    modal.addEventListener("close", () => {
+      document.body.classList.remove("modal-open");
+    });
+    const rail =
+      document.getElementById("program-rail");
+    const slides =
+      Array.from(document.querySelectorAll(".program-card"));
+    const dots =
+      Array.from(document.querySelectorAll("[data-slide]"));
+    const carousel =
+      document.getElementById("program-carousel");
     let activeSlide = 0;
     let carouselTimer;
     function moveCarousel(nextIndex) {
-      activeSlide = (nextIndex + slides.length) % slides.length;
-      rail.style.transform = `translateX(-${activeSlide * 100}%)`;
-      slides.forEach((slide, index) => { const active = index === activeSlide; slide.classList.toggle("is-active", active); slide.setAttribute("aria-hidden", String(!active)); });
-      dots.forEach((dot, index) => dot.setAttribute("aria-current", String(index === activeSlide)));
+      activeSlide =
+        (nextIndex + slides.length) % slides.length;
+      rail.style.transform =
+        translateX(-${activeSlide * 100}%);
+      slides.forEach((slide, index) => {
+        const active =
+          index === activeSlide;
+        slide.classList.toggle(
+          "is-active",
+          active
+        );
+        slide.setAttribute(
+          "aria-hidden",
+          String(!active)
+        );
+      });
+      dots.forEach((dot, index) => {
+        dot.setAttribute(
+          "aria-current",
+          String(index === activeSlide)
+        );
+      });
     }
-    function startCarousel() { if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) { clearInterval(carouselTimer); carouselTimer = setInterval(() => moveCarousel(activeSlide + 1), 2000); } }
-    function pauseCarousel() { clearInterval(carouselTimer); }
-    document.getElementById("program-prev").addEventListener("click", () => { moveCarousel(activeSlide - 1); startCarousel(); });
-    document.getElementById("program-next").addEventListener("click", () => { moveCarousel(activeSlide + 1); startCarousel(); });
-    dots.forEach((dot) => dot.addEventListener("click", () => { moveCarousel(Number(dot.dataset.slide)); startCarousel(); }));
-    carousel.addEventListener("mouseenter", pauseCarousel); carousel.addEventListener("mouseleave", startCarousel); carousel.addEventListener("focusin", pauseCarousel); carousel.addEventListener("focusout", startCarousel); startCarousel();
-
-    let selectedLevel = "Licence";
-    function updateSelectedLevel() { document.getElementById("form-level").value = selectedLevel; document.getElementById("selected-level-value").textContent = language === "en" && selectedLevel === "Licence" ? "Bachelor" : selectedLevel; }
-    document.querySelectorAll(".select-level").forEach((button) => button.addEventListener("click", () => { selectedLevel = button.dataset.level; updateSelectedLevel(); openModal(); }));
-
-    admissionForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      formStatus.classList.remove("error");
-      if (!admissionForm.checkValidity()) { formStatus.textContent = translations[language].invalid; formStatus.classList.add("error"); admissionForm.reportValidity(); return; }
-      const payload = Object.fromEntries(new FormData(admissionForm).entries());
-      formSubmit.disabled = true;
-      formStatus.textContent = translations[language].sending;
-      try {
-        const response = await fetch("/api/admission", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok || !result.ok) throw new Error("Submission failed");
-        admissionForm.reset(); selectedLevel = "Licence"; updateSelectedLevel(); formStatus.textContent = translations[language].success;
-      } catch (error) {
-        formStatus.textContent = translations[language].error;
-        formStatus.classList.add("error");
-      } finally { formSubmit.disabled = false; }
+    function startCarousel() {
+      if (
+        !window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches
+      ) {
+        clearInterval(carouselTimer);
+        carouselTimer =
+          setInterval(
+            () => moveCarousel(activeSlide + 1),
+            2000
+          );
+      }
+    }
+    function pauseCarousel() {
+      clearInterval(carouselTimer);
+    }
+    document
+      .getElementById("program-prev")
+      .addEventListener("click", () => {
+        moveCarousel(activeSlide - 1);
+        startCarousel();
+      });
+    document
+      .getElementById("program-next")
+      .addEventListener("click", () => {
+        moveCarousel(activeSlide + 1);
+        startCarousel();
+      });
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        moveCarousel(
+          Number(dot.dataset.slide)
+        );
+        startCarousel();
+      });
     });
+    carousel.addEventListener(
+      "mouseenter",
+      pauseCarousel
+    );
+    carousel.addEventListener(
+      "mouseleave",
+      startCarousel
+    );
+    carousel.addEventListener(
+      "focusin",
+      pauseCarousel
+    );
+    carousel.addEventListener(
+      "focusout",
+      startCarousel
+    );
+    startCarousel();
+    let selectedLevel = "Licence";
+    function updateSelectedLevel() {
+      document.getElementById("form-level").value =
+        selectedLevel;
+      document.getElementById("selected-level-value").textContent =
+        language === "en" && selectedLevel === "Licence"
+          ? "Bachelor"
+          : selectedLevel;
+    }
+    document
+      .querySelectorAll(".select-level")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedLevel =
+            button.dataset.level;
+          updateSelectedLevel();
+          openModal();
+        });
+      });
+    admissionForm.addEventListener(
+      "submit",
+      async (event) => {
+        event.preventDefault();
+        formStatus.classList.remove("error");
+        if (!admissionForm.checkValidity()) {
+          formStatus.textContent =
+            translations[language].invalid;
+          formStatus.classList.add("error");
+          admissionForm.reportValidity();
+          return;
+        }
+        const payload =
+          Object.fromEntries(
+            new FormData(admissionForm).entries()
+          );
+        formSubmit.disabled = true;
+        formStatus.textContent =
+          translations[language].sending;
+        try {
+          const response =
+            await fetch(
+              "/api/admission",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+              }
+            );
+          const result =
+            await response
+              .json()
+              .catch(() => ({}));
+          if (!response.ok || !result.ok) {
+            throw new Error("Submission failed");
+          }
+          admissionForm.reset();
+          selectedLevel = "Licence";
+          updateSelectedLevel();
+          formStatus.textContent =
+            translations[language].success;
+        } catch (error) {
+          formStatus.textContent =
+            translations[language].error;
+          formStatus.classList.add("error");
+        } finally {
+          formSubmit.disabled = false;
+        }
+      }
+    );
+    /* Initialisation de la langue */
+    translatePage();
   </script>
 </body>
 </html>
-
