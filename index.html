@@ -1792,7 +1792,7 @@
     });
     Object.entries(SOCIAL_URLS).forEach(([network, url]) => {
       const link =
-        document.querySelector([data-social="${network}"]);
+        document.querySelector(`[data-social="${network}"]`);
       if (link && /^https:\/\//.test(url)) {
         link.href = url;
       }
@@ -1844,8 +1844,7 @@
     function moveCarousel(nextIndex) {
       activeSlide =
         (nextIndex + slides.length) % slides.length;
-      rail.style.transform =
-        translateX(-${activeSlide * 100}%);
+            rail.style.transform = `translateX(-${activeSlide * 100}%)`;
       slides.forEach((slide, index) => {
         const active =
           index === activeSlide;
